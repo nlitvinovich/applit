@@ -2,29 +2,30 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>applit Catalog</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Applit Catalog</title>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<header class="header">
-  <h1 class="title">applit</h1>
-  <input id="search" class="search" placeholder="Поиск по каталогу">
-</header>
+  <header>
+    <h1>Applit Catalog</h1>
+  </header>
 
-<div class="categories">
-  <button class="cat-btn" data-cat="all">Все</button>
-  <button class="cat-btn" data-cat="iPhone">iPhone</button>
-  <button class="cat-btn" data-cat="iPad">iPad</button>
-  <button class="cat-btn" data-cat="MacBook">MacBook</button>
-  <button class="cat-btn" data-cat="Apple Watch">Watch</button>
-  <button class="cat-btn" data-cat="AirPods">AirPods</button>
-  <button class="cat-btn" data-cat="Accessory">Аксессуары</button>
-</div>
+  <nav>
+    <button onclick="filterCategory('iPhone')">iPhone</button>
+    <button onclick="filterCategory('iPad')">iPad</button>
+    <button onclick="filterCategory('MacBook')">MacBook</button>
+    <button onclick="filterCategory('Apple Watch')">Watch</button>
+    <button onclick="filterCategory('AirPods')">AirPods</button>
+    <button onclick="filterCategory('Accessory')">Accessory</button>
+  </nav>
 
-<main id="products" class="products"></main>
+  <!-- Контейнер каталога — обязательно нужен -->
+  <div id="catalog"></div>
 
-<script src="app.js"></script>
+  <!-- Подключение скрипта — путь должен быть именно таким -->
+  <script src="app.js"></script>
+
 </body>
 </html>
