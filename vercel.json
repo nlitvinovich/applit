@@ -5,7 +5,6 @@
     { "src": "admin/generator.html", "use": "@vercel/static" }
   ],
   "routes": [
-    { "src": "/admin/(.*)", "dest": "/admin/generator.html" },
-    { "src": "/(.*)", "dest": "/index.html" }
+    { "src": "/admin/(.*)", "dest": "/admin/generator.html" }
   ]
 }
