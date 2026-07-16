@@ -1,59 +1,44 @@
-async function loadProducts() {
-  const res = await fetch('products.csv');
-  const text = await res.text();
+let products = [];
 
-  const rows = text.split('\n').map(r => r.split(','));
-  const headers = rows[0];
+// Загружаем CSV
+fetch("products.csv")
+  .then(res => res.text())
+  .then(text => {
+    const lines = text.split("\n").slice(1); // пропускаем заголовок
+    products = lines
+      .filter(line => line.trim().length > 0)
+      .map(line => {
+        const [id, category, name, memory, color, sim, price] = line.split(",");
+        return { id, category, name, memory, color, sim, price };
+      });
 
-  const data = rows.slice(1).map(r => {
-    let obj = {};
-    headers.forEach((h, i) => obj[h.trim()] = r[i]?.trim());
-    return obj;
-  });
+    render(products);
+  })
+  .catch(err => console.error("Ошибка загрузки CSV:", err));
 
-  renderProducts(data);
 
-  document.getElementById('search').addEventListener('input', e => {
-    const q = e.target.value.toLowerCase();
-    const filtered = data.filter(p =>
-      p.name.toLowerCase().includes(q) ||
-      p.category.toLowerCase().includes(q)
-    );
-    renderProducts(filtered);
-  });
+// Рендер каталога
+function render(list) {
+  const catalog = document.getElementById("catalog");
+  catalog.innerHTML = "";
 
-  document.querySelectorAll('.cat-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-
-      const cat = btn.dataset.cat;
-      if (cat === "all") renderProducts(data);
-      else renderProducts(data.filter(p => p.category === cat));
-    });
-  });
-}
-
-function renderProducts(products) {
-  const container = document.getElementById('products');
-  container.innerHTML = '';
-
-  products.forEach(p => {
-    const card = document.createElement('div');
-    card.className = 'product-card';
-
+  list.forEach(p => {
+    const card = document.createElement("div");
+    card.className = "card";
     card.innerHTML = `
-      <div class="product-name">${p.name}</div>
-      <div class="tags">
-        ${p.memory ? `<div class="tag">${p.memory}</div>` : ""}
-        ${p.color ? `<div class="tag">${p.color}</div>` : ""}
-        ${p.sim ? `<div class="tag">${p.sim}</div>` : ""}
-      </div>
-      <div class="price">${p.price} BYN</div>
+      <h3>${p.name}</h3>
+      <p><b>Категория:</b> ${p.category}</p>
+      <p><b>Память:</b> ${p.memory}</p>
+      <p><b>Цвет:</b> ${p.color}</p>
+      <p><b>SIM:</b> ${p.sim}</p>
+      <p><b>Цена:</b> ${p.price} BYN</p>
     `;
-
-    container.appendChild(card);
+    catalog.appendChild(card);
   });
 }
 
-loadProducts();
+
+// Фильтр по категории
+function filterCategory(cat) {
+  render(products.filter(p => p.category === cat));
+}
