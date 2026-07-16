@@ -12,6 +12,17 @@
     <h1>Applit Catalog</h1>
   </header>
 
+  <!-- Поиск -->
+  <div style="padding: 15px;">
+    <input 
+      id="search"
+      type="text"
+      placeholder="Поиск..."
+      style="width: 100%; padding: 12px; font-size: 16px; border-radius: 8px; border: 1px solid #ccc;"
+      oninput="searchProducts()"
+    >
+  </div>
+
   <nav>
     <button onclick="filterCategory('iPhone')">iPhone</button>
     <button onclick="filterCategory('iPad')">iPad</button>
@@ -21,10 +32,8 @@
     <button onclick="filterCategory('Accessory')">Accessory</button>
   </nav>
 
-  <!-- Контейнер каталога — обязательно нужен -->
   <div id="catalog"></div>
 
-  <!-- Подключение скрипта — путь должен быть именно таким -->
   <script src="app.js"></script>
 
 </body>
