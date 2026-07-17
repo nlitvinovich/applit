@@ -1,3 +1,106 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Telegram → CSV генератор</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", Arial, sans-serif;
+      background: #f5f5f7;
+      margin: 0;
+      padding: 0;
+      color: #1d1d1f;
+    }
+    header {
+      background: #ffffff;
+      padding: 20px;
+      text-align: center;
+      font-size: 22px;
+      font-weight: 600;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    main {
+      max-width: 1100px;
+      margin: 20px auto;
+      padding: 0 20px 30px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    textarea {
+      width: 100%;
+      min-height: 380px;
+      padding: 12px 14px;
+      font-size: 14px;
+      border-radius: 10px;
+      border: 1px solid #d2d2d7;
+      resize: vertical;
+      box-sizing: border-box;
+    }
+    textarea:focus {
+      outline: none;
+      border-color: #0071e3;
+      box-shadow: 0 0 0 3px rgba(0,113,227,0.2);
+    }
+    .column-title {
+      margin-bottom: 8px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .controls {
+      grid-column: 1 / -1;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 5px;
+    }
+    button {
+      padding: 10px 20px;
+      border-radius: 999px;
+      border: none;
+      background: #0071e3;
+      color: #fff;
+      font-size: 14px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    button:hover {
+      background: #005bb5;
+    }
+    .hint {
+      font-size: 12px;
+      color: #6e6e73;
+      margin-top: 4px;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  Telegram → CSV генератор
+</header>
+
+<main>
+  <div>
+    <div class="column-title">Исходный текст (Telegram‑пост)</div>
+    <textarea id="input" placeholder="Вставь сюда весь пост из Telegram, включая заголовки с 📱 и списки товаров"></textarea>
+    <div class="hint">Пример строки: 17 pro 256 orange esim - 3193 BYN</div>
+  </div>
+
+  <div>
+    <div class="column-title">Результат (CSV)</div>
+    <textarea id="output" placeholder="Здесь появится CSV"></textarea>
+    <div class="hint">Скопируй результат в products.csv</div>
+  </div>
+
+  <div class="controls">
+    <button onclick="generateCSV()">Сгенерировать CSV</button>
+    <button onclick="copyCSV()">Скопировать CSV</button>
+  </div>
+</main>
+
+<script>
 function parseTelegramToCSV(inputText) {
   const lines = inputText.split("\n").map(l => l.trim()).filter(l => l.length > 0);
 
@@ -5,21 +108,24 @@ function parseTelegramToCSV(inputText) {
   let id = 1;
   const rows = [];
 
+  // Категории с эмодзи
   const categoryEmojiRegex = /^[📱🖥💻⌚🎧]\s*(.+)$/i;
-  const categoryPlainRegex = /^(?!.*\d+\s*BYN)(?!.*\b(GB|TB)\b)(?!.*\b(esim|sim|wifi|cellular)\b).+$/i;
-  const productRegex = /^(.+?)\s+(\d+(?:TB|GB)?)\s+([\wА-Яа-я+]+)\s+([\w+]+)\s*-\s*(\d+)\s*BYN/i;
 
+  // Категории без эмодзи (строка без цены, памяти, SIM)
+  const categoryPlainRegex =
+    /^(?!.*\d+\s*BYN)(?!.*\b(GB|TB)\b)(?!.*\b(esim|sim|wifi|cellular)\b).+$/i;
+
+  // Парсер товара
+  const productRegex =
+    /^(.+?)\s+(\d+(?:TB|GB)?)\s+([\wА-Яа-я+]+)\s+([\w+]+)\s*-\s*(\d+)\s*BYN/i;
+
+  // Автоопределение модели
   function detectModel(category, namePart) {
-    const base = category.split("/")[0].trim(); // например: "iPhone 17 Pro"
+    const base = category.split("/")[0].trim();
     const words = base.split(" ");
 
-    // Определяем тип устройства
-    const deviceType = words[0]; // iPhone / iPad / MacBook / Watch / AirPods
+    const deviceType = words[0]; // iPhone / iPad / MacBook / Apple / AirPods
 
-    // Определяем номер модели из категории
-    const modelNumber = words[1] || "";
-
-    // Приводим namePart к нормальному виду
     const cleaned = namePart
       .replace(/pro/i, "Pro")
       .replace(/max/i, "Max")
@@ -33,18 +139,21 @@ function parseTelegramToCSV(inputText) {
 
   for (const line of lines) {
 
+    // Категория с эмодзи
     const emojiMatch = line.match(categoryEmojiRegex);
     if (emojiMatch) {
       category = emojiMatch[1].trim();
       continue;
     }
 
+    // Категория без эмодзи
     const plainMatch = line.match(categoryPlainRegex);
     if (plainMatch) {
       category = plainMatch[0].trim();
       continue;
     }
 
+    // Товар
     const prodMatch = line.match(productRegex);
     if (prodMatch) {
       const name = prodMatch[1].trim();
@@ -75,3 +184,29 @@ function parseTelegramToCSV(inputText) {
 
   return csv;
 }
+
+function escapeCSV(value) {
+  if (!value) return "";
+  const v = String(value);
+  if (v.includes(",") || v.includes('"')) {
+    return `"${v.replace(/"/g, '""')}"`;
+  }
+  return v;
+}
+
+function generateCSV() {
+  const text = document.getElementById("input").value;
+  const csv = parseTelegramToCSV(text);
+  document.getElementById("output").value = csv;
+}
+
+function copyCSV() {
+  const out = document.getElementById("output");
+  out.select();
+  out.setSelectionRange(0, 999999);
+  document.execCommand("copy");
+}
+</script>
+
+</body>
+</html>
