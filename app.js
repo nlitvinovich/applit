@@ -1,17 +1,21 @@
-// Загружаем CSV и превращаем в массив объектов
+// Загрузка CSV
 async function loadProducts() {
-  const response = await fetch('products.csv');
+  const response = await fetch('products.csv?' + Date.now()); // защита от кэша
   const text = await response.text();
 
-  const lines = text.trim().split('\n');
-  const headers = lines[0].split(',');
+  const lines = text.split('\n').slice(1); // пропускаем заголовок
+  const products = [];
 
-  const products = lines.slice(1).map(line => {
-    const values = line.split(',');
-    const obj = {};
-    headers.forEach((h, i) => obj[h.trim()] = values[i].trim());
-    return obj;
-  });
+  for (const line of lines) {
+    if (!line.trim()) continue;
+    const [id, model, price] = line.split(',');
+
+    products.push({
+      id: Number(id),
+      model: model.trim(),
+      price: Number(price)
+    });
+  }
 
   return products;
 }
@@ -34,18 +38,28 @@ function renderProducts(list) {
   });
 }
 
+// Обновление индикатора времени
+function updateTimestamp() {
+  const el = document.getElementById('update-time');
+  const now = new Date();
 
-// Инициализация
-let allProducts = [];
+  const hh = String(now.getHours()).padStart(2, '0');
+  const mm = String(now.getMinutes()).padStart(2, '0');
 
-loadProducts().then(data => {
-  allProducts = data;
-  renderProducts(allProducts);
-});
+  el.textContent = `Обновлено: ${hh}:${mm}`;
+}
 
-// Поиск
-document.getElementById('search').addEventListener('input', function() {
-  const q = this.value.toLowerCase().trim();
-  const filtered = allProducts.filter(p => p.model.toLowerCase().includes(q));
-  renderProducts(filtered);
-});
+// Основной запуск
+async function initCatalog() {
+  const products = await loadProducts();
+  renderProducts(products);
+  updateTimestamp();
+}
+
+// Автообновление каждые 10 минут
+setInterval(() => {
+  location.reload();
+}, 10 * 60 * 1000);
+
+// Запуск
+initCatalog();
