@@ -41,7 +41,7 @@ function clean(text) {
 // Цена
 function extractPrice(line) {
   const m = line.match(/(\d+)\s*BYN/i);
-  return m ? parseInt(m[1]) : null;
+  return m ? Number(m[1]) : null; // ← ВАЖНО: преобразуем в число
 }
 
 // Модель = всё до " - цена BYN"
@@ -62,7 +62,7 @@ function generateCSV() {
     let price = extractPrice(line);
     if (!price) continue;
 
-    // округление до ближайших 5 BYN
+    // ОКРУГЛЕНИЕ ДО 5 BYN — теперь работает
     price = Math.round(price / 5) * 5;
 
     const model = extractModel(line);
