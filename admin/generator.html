@@ -24,7 +24,7 @@ button:hover { background:#005bb5; }
 
 <script>
 
-// Мягкая очистка HTML
+// Мягкая очистка HTML Telegram Web
 function clean(text) {
   return text
     .replace(/<[^>]+>/g, "")        // HTML теги
@@ -35,65 +35,15 @@ function clean(text) {
     .trim();
 }
 
-// Определение модели из строки
-function detectModel(line) {
-  // iPhone
-  if (/17 pro max/i.test(line)) return "iPhone 17 Pro Max";
-  if (/17 pro/i.test(line)) return "iPhone 17 Pro";
-  if (/17e/i.test(line)) return "iPhone 17e";
-  if (/^17 /i.test(line)) return "iPhone 17";
-  if (/16 pro max/i.test(line)) return "iPhone 16 Pro Max";
-  if (/16 pro/i.test(line)) return "iPhone 16 Pro";
-  if (/16 plus/i.test(line)) return "iPhone 16 Plus";
-  if (/^16 /i.test(line)) return "iPhone 16";
-  if (/15 plus/i.test(line)) return "iPhone 15 Plus";
-  if (/^15 /i.test(line)) return "iPhone 15";
-  if (/^14 /i.test(line)) return "iPhone 14";
-  if (/^13 /i.test(line)) return "iPhone 13";
-
-  // iPad
-  if (/iPad Air 13/i.test(line)) return "iPad Air 13";
-  if (/iPad Air 11/i.test(line)) return "iPad Air 11";
-  if (/iPad Pro 13/i.test(line)) return "iPad Pro 13";
-  if (/iPad Pro 11/i.test(line)) return "iPad Pro 11";
-  if (/iPad 11/i.test(line)) return "iPad 11";
-
-  // MacBook
-  if (/MacBook Neo 13/i.test(line)) return "MacBook Neo 13";
-  if (/Air 13 M4/i.test(line)) return "MacBook Air 13 M4";
-  if (/Air 13 M5/i.test(line)) return "MacBook Air 13 M5";
-  if (/Air 15 M5/i.test(line)) return "MacBook Air 15 M5";
-
-  // Watch
-  if (/SE3 40/i.test(line)) return "Watch SE3 40";
-  if (/SE3 44/i.test(line)) return "Watch SE3 44";
-  if (/S11 42/i.test(line)) return "Watch S11 42";
-  if (/S11 46/i.test(line)) return "Watch S11 46";
-  if (/Ultra/i.test(line)) return "Watch Ultra";
-
-  // AirPods
-  if (/AirPods 4 ANC/i.test(line)) return "AirPods 4 ANC";
-  if (/AirPods 4/i.test(line)) return "AirPods 4";
-  if (/AirPods Pro 3/i.test(line)) return "AirPods Pro 3";
-  if (/AirPods Pro 2/i.test(line)) return "AirPods Pro 2";
-  if (/AirPods Max/i.test(line)) return "AirPods Max";
-  if (/AirPods MAX 2/i.test(line)) return "AirPods Max 2";
-
-  // Accessories
-  if (/Pencil 3gen/i.test(line)) return "Pencil 3gen";
-  if (/Pencil Pro/i.test(line)) return "Pencil Pro";
-  if (/Magic Mouse/i.test(line)) return "Magic Mouse";
-  if (/AirTag 1/i.test(line)) return "AirTag 1";
-  if (/AirTag 4 Шт/i.test(line)) return "AirTag 4";
-  if (/AirTag 4Pac/i.test(line)) return "AirTag 4Pac";
-
-  return null;
-}
-
-// Парсер строки товара
-function parsePrice(line) {
+// Цена
+function extractPrice(line) {
   const m = line.match(/(\d+)\s*BYN/i);
   return m ? m[1] : null;
+}
+
+// Модель = вся строка до цены
+function extractModel(line) {
+  return line.replace(/[-–—]\s*\d+\s*BYN/i, "").trim();
 }
 
 function generateCSV() {
@@ -106,12 +56,12 @@ function generateCSV() {
   const rows = [];
 
   for (const line of lines) {
-    const model = detectModel(line);
-    const price = parsePrice(line);
+    const price = extractPrice(line);
+    if (!price) continue;
 
-    if (model && price) {
-      rows.push({ id: id++, model, price });
-    }
+    const model = extractModel(line);
+
+    rows.push({ id: id++, model, price });
   }
 
   let csv = "id,model,price\n";
