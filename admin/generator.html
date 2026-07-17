@@ -2,17 +2,106 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>Generator</title>
+  <title>Telegram → CSV генератор</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", Arial, sans-serif;
+      background: #f5f5f7;
+      margin: 0;
+      padding: 0;
+      color: #1d1d1f;
+    }
+    header {
+      background: #ffffff;
+      padding: 20px;
+      text-align: center;
+      font-size: 22px;
+      font-weight: 600;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    main {
+      max-width: 1100px;
+      margin: 20px auto;
+      padding: 0 20px 30px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    textarea {
+      width: 100%;
+      min-height: 380px;
+      padding: 12px 14px;
+      font-size: 14px;
+      border-radius: 10px;
+      border: 1px solid #d2d2d7;
+      resize: vertical;
+      box-sizing: border-box;
+    }
+    textarea:focus {
+      outline: none;
+      border-color: #0071e3;
+      box-shadow: 0 0 0 3px rgba(0,113,227,0.2);
+    }
+    .column-title {
+      margin-bottom: 8px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .controls {
+      grid-column: 1 / -1;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 5px;
+    }
+    button {
+      padding: 10px 20px;
+      border-radius: 999px;
+      border: none;
+      background: #0071e3;
+      color: #fff;
+      font-size: 14px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    button:hover {
+      background: #005bb5;
+    }
+    .hint {
+      font-size: 12px;
+      color: #6e6e73;
+      margin-top: 4px;
+    }
+  </style>
 </head>
 <body>
 
-<textarea id="input"></textarea>
-<button onclick="generateCSV()">GO</button>
-<textarea id="output"></textarea>
+<header>
+  Telegram → CSV генератор
+</header>
+
+<main>
+  <div>
+    <div class="column-title">Исходный текст (Telegram‑пост)</div>
+    <textarea id="input" placeholder="Вставь сюда весь пост из Telegram, включая заголовки с 📱 и списки товаров"></textarea>
+    <div class="hint">Пример строки: 17 pro 256 orange esim - 3193 BYN</div>
+  </div>
+
+  <div>
+    <div class="column-title">Результат (CSV)</div>
+    <textarea id="output" placeholder="Здесь появится CSV в формате:&#10;id,category,name,memory,color,sim,price"></textarea>
+    <div class="hint">Скопируй результат в products.csv для каталога</div>
+  </div>
+
+  <div class="controls">
+    <button onclick="generateCSV()">Сгенерировать CSV</button>
+    <button onclick="copyCSV()">Скопировать CSV</button>
+  </div>
+</main>
 
 <script>
-function parseTelegramToCSV(text) {
-  const lines = text.split("\n").map(l => l.trim()).filter(l => l.length > 0);
+function parseTelegramToCSV(inputText) {
+  const lines = inputText.split("\n").map(l => l.trim()).filter(l => l.length > 0);
 
   let category = "";
   let id = 1;
@@ -30,30 +119,52 @@ function parseTelegramToCSV(text) {
 
     const prodMatch = line.match(productRegex);
     if (prodMatch) {
+      const name = prodMatch[1].trim();
+      const memory = prodMatch[2].trim();
+      const color = prodMatch[3].trim();
+      const sim = prodMatch[4].trim();
+      const price = prodMatch[5].trim();
+
       rows.push({
         id: id++,
         category,
-        name: prodMatch[1].trim(),
-        memory: prodMatch[2].trim(),
-        color: prodMatch[3].trim(),
-        sim: prodMatch[4].trim(),
-        price: prodMatch[5].trim()
+        name,
+        memory,
+        color,
+        sim,
+        price
       });
     }
   }
 
   let csv = "id,category,name,memory,color,sim,price\n";
   rows.forEach(r => {
-    csv += `${r.id},${r.category},${r.name},${r.memory},${r.color},${r.sim},${r.price}\n`;
+    csv += `${r.id},${escapeCSV(r.category)},${escapeCSV(r.name)},${escapeCSV(r.memory)},${escapeCSV(r.color)},${escapeCSV(r.sim)},${r.price}\n`;
   });
 
   return csv;
+}
+
+function escapeCSV(value) {
+  if (!value) return "";
+  const v = String(value);
+  if (v.includes(",") || v.includes('"')) {
+    return `"${v.replace(/"/g, '""')}"`;
+  }
+  return v;
 }
 
 function generateCSV() {
   const text = document.getElementById("input").value;
   const csv = parseTelegramToCSV(text);
   document.getElementById("output").value = csv;
+}
+
+function copyCSV() {
+  const out = document.getElementById("output");
+  out.select();
+  out.setSelectionRange(0, 999999);
+  document.execCommand("copy");
 }
 </script>
 
