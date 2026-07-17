@@ -22,15 +22,18 @@ function renderProducts(list) {
   container.innerHTML = '';
 
   list.forEach(p => {
-    const item = document.createElement('div');
-    item.className = 'product-item';
-    item.innerHTML = `
-      <div class="model">${p.model}</div>
-      <div class="price">${p.price} BYN</div>
+    const card = document.createElement('div');
+    card.className = 'card';
+
+    card.innerHTML = `
+      <div class="card-title">${p.model}</div>
+      <div class="card-price">${p.price} BYN</div>
     `;
-    container.appendChild(item);
+
+    container.appendChild(card);
   });
 }
+
 
 // Инициализация
 let allProducts = [];
