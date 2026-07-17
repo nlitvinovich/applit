@@ -24,42 +24,53 @@ button:hover { background:#005bb5; }
 
 <script>
 
-// Очистка HTML Telegram Web
+// 1) ЖЁСТКАЯ очистка HTML Telegram Web
 function clean(text) {
   return text
-    .replace(/<[^>]+>/g, "")              // HTML теги
+    .replace(/<[^>]*>/g, "\n")          // удаляем HTML теги → перенос строки
+    .replace(/&nbsp;/g, " ")
+    .replace(/&[a-zA-Z]+;/g, " ")
     .replace(/[\u{1F300}-\u{1FAFF}]/gu, "") // эмодзи
-    .replace(/[\uFFFD]/g, "")             // битые символы
+    .replace(/[\uFFFD]/g, "")           // битые символы
     .replace(/\s+/g, " ")
-    .replace(/\n\s+/g, "\n")
+    .replace(/\n+/g, "\n")
     .trim();
 }
 
-// Цена
+// 2) Цена
 function extractPrice(line) {
   const m = line.match(/(\d+)\s*BYN/i);
   return m ? m[1] : null;
 }
 
-// Модель = вся строка до цены
+// 3) Модель = всё до цены
 function extractModel(line) {
   return line.replace(/[-–—]\s*\d+\s*BYN/i, "").trim();
 }
 
 function generateCSV() {
   const raw = document.getElementById("input").value;
+
+  // очистка HTML
   const text = clean(raw);
 
+  // разбиваем на строки
   const lines = text.split("\n").map(l => l.trim()).filter(Boolean);
 
   let id = 1;
   const rows = [];
 
   for (const line of lines) {
+
+    // ищем цену
     const price = extractPrice(line);
     if (!price) continue;
 
+    // модель = строка до цены
     const model = extractModel(line);
+
+    // фильтр: модель должна содержать хотя бы одно слово + память
+    if (!model.match(/\d/)) continue; // отсекаем мусор
 
     rows.push({ id: id++, model, price });
   }
