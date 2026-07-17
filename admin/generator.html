@@ -101,18 +101,40 @@
 </main>
 
 <script>
-// ОЧИСТКА HTML Telegram Web + удаление битых символов
+// ОЧИСТКА HTML Telegram Web + удаление всех битых символов
 function cleanTelegramHTML(raw) {
   return raw
-    .replace(/<[^>]+>/g, "")            // удаляем HTML-теги
-    .replace(/&nbsp;/g, " ")            // убираем HTML-пробелы
-    .replace(/&#\d+;/g, "")             // убираем HTML-entity
-    .replace(/[\uFFFD]/g, "")           // убираем символ �
-    .replace(/[^\S\r\n]+/g, " ")        // нормализуем пробелы
+    // удаляем HTML-теги
+    .replace(/<[^>]+>/g, "")
+
+    // удаляем HTML-сущности
+    .replace(/&nbsp;/g, " ")
+    .replace(/&#\d+;/g, "")
+    .replace(/&[a-zA-Z]+;/g, "")
+
+    // удаляем символы �
+    .replace(/\uFFFD/g, "")
+
+    // удаляем управляющие символы
+    .replace(/[\u0000-\u001F\u007F-\u009F]/g, "")
+
+    // удаляем битые emoji (одиночные surrogate-пары)
+    .replace(/[\uD800-\uDBFF](?![\uDC00-\uDFFF])/g, "")
+    .replace(/(?![\uD800-\uDBFF])[\uDC00-\uDFFF]/g, "")
+
+    // удаляем символы вне диапазона BMP
+    .replace(/[^\u0000-\uFFFF]/g, "")
+
+    // нормализуем пробелы
+    .replace(/[^\S\r\n]+/g, " ")
+
+    // удаляем даты Telegram
     .replace(/Channel created/gi, "")
-    .replace(/June \d{1,2}, \d{4}/gi, "")
-    .replace(/February \d{1,2}, \d{4}/gi, "")
-    .replace(/\s{2,}/g, "\n")           // убираем двойные переносы
+    .replace(/(January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2},\s+\d{4}/gi, "")
+
+    // убираем лишние переносы
+    .replace(/\n{2,}/g, "\n")
+
     .trim();
 }
 
