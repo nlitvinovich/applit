@@ -84,8 +84,8 @@
 <main>
   <div>
     <div class="column-title">Исходный текст (Telegram‑пост)</div>
-    <textarea id="input" placeholder="Вставь сюда весь пост из Telegram, включая заголовки с 📱 и списки товаров"></textarea>
-    <div class="hint">Пример строки: 17 pro 256 orange esim - 3193 BYN</div>
+    <textarea id="input" placeholder="Вставь сюда пост из Telegram Web — даже если он содержит HTML"></textarea>
+    <div class="hint">Поддерживается HTML из Telegram Web</div>
   </div>
 
   <div>
@@ -101,6 +101,19 @@
 </main>
 
 <script>
+// ОЧИСТКА HTML Telegram Web → превращаем в чистый текст
+function cleanTelegramHTML(raw) {
+  return raw
+    .replace(/<[^>]+>/g, "")        // удаляем все HTML-теги
+    .replace(/Channel created/gi, "")
+    .replace(/June \d{1,2}, \d{4}/gi, "")
+    .replace(/February \d{1,2}, \d{4}/gi, "")
+    .replace(/^\s+|\s+$/g, "")      // trim
+    .replace(/\n{2,}/g, "\n")       // убираем пустые строки
+    .trim();
+}
+
+// ОСНОВНОЙ ПАРСЕР
 function parseTelegramToCSV(inputText) {
   const lines = inputText.split("\n").map(l => l.trim()).filter(l => l.length > 0);
 
@@ -108,23 +121,17 @@ function parseTelegramToCSV(inputText) {
   let id = 1;
   const rows = [];
 
-  // Категории с эмодзи
   const categoryEmojiRegex = /^[📱🖥💻⌚🎧]\s*(.+)$/i;
-
-  // Категории без эмодзи (строка без цены, памяти, SIM)
   const categoryPlainRegex =
     /^(?!.*\d+\s*BYN)(?!.*\b(GB|TB)\b)(?!.*\b(esim|sim|wifi|cellular)\b).+$/i;
 
-  // Парсер товара
   const productRegex =
     /^(.+?)\s+(\d+(?:TB|GB)?)\s+([\wА-Яа-я+]+)\s+([\w+]+)\s*-\s*(\d+)\s*BYN/i;
 
-  // Автоопределение модели
   function detectModel(category, namePart) {
     const base = category.split("/")[0].trim();
     const words = base.split(" ");
-
-    const deviceType = words[0]; // iPhone / iPad / MacBook / Apple / AirPods
+    const deviceType = words[0];
 
     const cleaned = namePart
       .replace(/pro/i, "Pro")
@@ -139,21 +146,18 @@ function parseTelegramToCSV(inputText) {
 
   for (const line of lines) {
 
-    // Категория с эмодзи
     const emojiMatch = line.match(categoryEmojiRegex);
     if (emojiMatch) {
       category = emojiMatch[1].trim();
       continue;
     }
 
-    // Категория без эмодзи
     const plainMatch = line.match(categoryPlainRegex);
     if (plainMatch) {
       category = plainMatch[0].trim();
       continue;
     }
 
-    // Товар
     const prodMatch = line.match(productRegex);
     if (prodMatch) {
       const name = prodMatch[1].trim();
@@ -195,7 +199,8 @@ function escapeCSV(value) {
 }
 
 function generateCSV() {
-  const text = document.getElementById("input").value;
+  const raw = document.getElementById("input").value;
+  const text = cleanTelegramHTML(raw);
   const csv = parseTelegramToCSV(text);
   document.getElementById("output").value = csv;
 }
