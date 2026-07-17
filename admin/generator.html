@@ -24,12 +24,12 @@ button:hover { background:#005bb5; }
 
 <script>
 
-// Мягкая очистка HTML Telegram Web
+// Очистка HTML Telegram Web
 function clean(text) {
   return text
-    .replace(/<[^>]+>/g, "")        // HTML теги
+    .replace(/<[^>]+>/g, "")              // HTML теги
     .replace(/[\u{1F300}-\u{1FAFF}]/gu, "") // эмодзи
-    .replace(/[\uFFFD]/g, "")       // битые символы
+    .replace(/[\uFFFD]/g, "")             // битые символы
     .replace(/\s+/g, " ")
     .replace(/\n\s+/g, "\n")
     .trim();
