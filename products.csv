@@ -1,96 +1,96 @@
-id,category,name,memory,color,sim,price
-1,,17 pro,256,orange,esim,3193
-2,,17 pro,256,blue,esim,3251
-3,,17 Pro,256,Silver,eSim,3266
-4,,17 pro,256,orange,sim+esim,3540
-5,,17 pro,256,blue,sim+esim,3526
-6,,17 pro,256,silver,sim+esim,3540
-7,,17 pro,512,orange,esim,3815
-8,,17 pro,512,blue,esim,3858
-9,,17 pro,512,silver,esim,3988
-10,,17 pro,512,orange,sim+esim,4147
-11,,17 pro,512,blue,sim+esim,4277
-12,,17 pro,512,silver,sim+esim,4263
-13,,17 pro,1TB,orange,esim,4451
-14,,17 pro,1TB,blue,esim,4508
-15,,17 pro,1TB,silver,eSIM,4581
-16,,17 pro,1TB,orange,sim+sim,4740
-17,,17 pro,1TB,blue,sim+esim,4725
-18,,17 pro,1TB,silver,sim+sim,4855
-19,,17 Pro Max,256,orange,esim,3454
-20,,17 Pro Max,256,blue,esim,3482
-21,,17 Pro Max,256,silver,esim,3497
-22,,17 Pro Max,256,orange,sim+Esim,3902
-23,,17 Pro Max,256,blue,sim+Esim,3902
-24,,17 Pro Max,256,silver,sim+Esim,3959
-25,,17 Pro Max,512,orange,esim,4133
-26,,17 Pro Max,512,silver,esim,4219
-27,,17 Pro Max,512,blue,esim,4118
-28,,17 Pro Max,512,orange,sim+Esim,4552
-29,,17 Pro Max,512,blue,sim+Esim,4436
-30,,17 Pro Max,512,silver,sim+Esim,4566
-31,,17 pro max,1TB,orange,esim,4740
-32,,17 pro max,1TB,blue,esim,4740
-33,,17 pro max,1TB,silver,esim,4826
-34,,17 pro max,1TB,orange,sim+Esim,5231
-35,,17 pro max,1TB,blue,sim+Esim,5173
-36,,17 pro max,1TB,silver,sim+Esim,5202
-37,,Air,256,Black,eSim,2673
-38,,Air,256,White,eSim,2659
-39,,Air,256,Gold,eSim,2630
-40,,Air,256,Blue,eSim,2630
-41,,17e,256,black,Esim,1951
-42,,17e,256,white,Esim,1951
-43,,17e,256,pink,Esim,1951
-44,,17e,256,Black,Sim+eSim,2009
-45,,17e,256,Pink,Sim+eSim,2009
-46,,17,256,Black,eSim,2485
-47,,17,256,White,eSim,2601
-48,,17,256,Blue,eSim,2457
-49,,17,256,Sage,eSim,2485
-50,,17,256,Lavender,eSim,2543
-51,,17,256,Black,Sim+eSim,2543
-52,,17,256,White,Sim+eSim,2543
-53,,17,256,Blue,Sim+eSim,2529
-54,,17,256,Sage,Sim+eSim,2558
-55,,17,256,Lavender,Sim+eSim,2601
-56,,17,512,black,Esim,3237
-57,,17,512,white,Esim,3266
-58,,17,512,lavander,Esim,3222
-59,,17,512,blue,ESIM,3237
-60,,17,512,black,Sim+Esim,3251
-61,,17,512,blue,Sim+Esim,3381
-62,,17,512,white,Sim+Esim,3266
-63,,17,512,sage,Sim+Esim,3352
-64,,17,512,lavender,Sim+Esim,3381
-65,,16е,128,GB,black,1763
-66,,iPad 11,128GB,WiFi,blue,1321
-67,,iPad 11,128GB,WiFi,silver,1358
-68,,iPad 11,128GB,WiFi,pink,1373
-69,,iPad 11,128GB,WiFi,yellow,1373
-70,,iPad 11,256GB,WiFi,blue,1561
-71,,iPad 11,256GB,WiFi,silver,1604
-72,,iPad 11,256GB,WiFi,yellow,1561
-73,,iPad 11,256GB,WiFi,pink,1590
-74,,iPad Air 11 (M4) 2026,128,Space,Gray,2124
-75,,iPad Air 11 (M4),2026,128,Purple,2182
-76,,iPad Air 11 (M4),2026,128,blue,2081
-77,,iPad Air 11 (M4),2026,128,Starlight,2182
-78,,iPad Air 11 (M4) 2026,256,Space,Gray,2543
-79,,iPad Air 11 (M4),2026,256,Purple,2587
-80,,iPad Air 11 (M4),2026,256,Blue,2543
-81,,iPad Air 11 (M4),2026,256,Starlight,2587
-82,,iPad Air 13 (M4) 2026,128,Space,Gray,2601
-83,,iPad Air 13 (M4),2026,128,starlight,2630
-84,,iPad Air 13 (M4),2026,128,Blue,2601
-85,,iPad Air 13 (M4),2026,128,Purple,2601
-86,,SE3,40,Midnight,2025,824
-87,,SE3,40,Starlight,2025,838
-88,,SE3,44,Midnight,2025,881
-89,,SE3,44,Starlight,2025,910
-90,,S11,42,Jet,Black,1078
-91,,S11,42,Space,Gray,1078
-92,,S11,42,Rose,Gold,1078
-93,,S11,46,Jet,Black,1170
-94,,S11,46,Space,Gray,1170
-95,,S11,46,Rose,Gold,1170
+id,category,model,name,memory,color,sim,price
+1,�iPhone 17 Pro / 17 Pro Max,�iPhone 17 Pro,17 pro,256,orange,esim,3193
+2,�iPhone 17 Pro / 17 Pro Max,�iPhone 17 Pro,17 pro,256,blue,esim,3251
+3,�iPhone 17 Pro / 17 Pro Max,�iPhone 17 Pro,17 Pro,256,Silver,eSim,3266
+4,�iPhone 17 Pro / 17 Pro Max,�iPhone 17 Pro,17 pro,256,orange,sim+esim,3540
+5,�iPhone 17 Pro / 17 Pro Max,�iPhone 17 Pro,17 pro,256,blue,sim+esim,3526
+6,�iPhone 17 Pro / 17 Pro Max,�iPhone 17 Pro,17 pro,256,silver,sim+esim,3540
+7,�iPhone 17 Pro / 17 Pro Max,�iPhone 17 Pro,17 pro,512,orange,esim,3815
+8,�iPhone 17 Pro / 17 Pro Max,�iPhone 17 Pro,17 pro,512,blue,esim,3858
+9,�iPhone 17 Pro / 17 Pro Max,�iPhone 17 Pro,17 pro,512,silver,esim,3988
+10,�iPhone 17 Pro / 17 Pro Max,�iPhone 17 Pro,17 pro,512,orange,sim+esim,4147
+11,�iPhone 17 Pro / 17 Pro Max,�iPhone 17 Pro,17 pro,512,blue,sim+esim,4277
+12,�iPhone 17 Pro / 17 Pro Max,�iPhone 17 Pro,17 pro,512,silver,sim+esim,4263
+13,�iPhone 17 Pro / 17 Pro Max,�iPhone 17 Pro,17 pro,1TB,orange,esim,4451
+14,�iPhone 17 Pro / 17 Pro Max,�iPhone 17 Pro,17 pro,1TB,blue,esim,4508
+15,�iPhone 17 Pro / 17 Pro Max,�iPhone 17 Pro,17 pro,1TB,silver,eSIM,4581
+16,�iPhone 17 Pro / 17 Pro Max,�iPhone 17 Pro,17 pro,1TB,orange,sim+sim,4740
+17,�iPhone 17 Pro / 17 Pro Max,�iPhone 17 Pro,17 pro,1TB,blue,sim+esim,4725
+18,�iPhone 17 Pro / 17 Pro Max,�iPhone 17 Pro,17 pro,1TB,silver,sim+sim,4855
+19,�iPhone 17 Pro / 17 Pro Max,�iPhone 17 Pro Max,17 Pro Max,256,orange,esim,3454
+20,�iPhone 17 Pro / 17 Pro Max,�iPhone 17 Pro Max,17 Pro Max,256,blue,esim,3482
+21,�iPhone 17 Pro / 17 Pro Max,�iPhone 17 Pro Max,17 Pro Max,256,silver,esim,3497
+22,�iPhone 17 Pro / 17 Pro Max,�iPhone 17 Pro Max,17 Pro Max,256,orange,sim+Esim,3902
+23,�iPhone 17 Pro / 17 Pro Max,�iPhone 17 Pro Max,17 Pro Max,256,blue,sim+Esim,3902
+24,�iPhone 17 Pro / 17 Pro Max,�iPhone 17 Pro Max,17 Pro Max,256,silver,sim+Esim,3959
+25,�iPhone 17 Pro / 17 Pro Max,�iPhone 17 Pro Max,17 Pro Max,512,orange,esim,4133
+26,�iPhone 17 Pro / 17 Pro Max,�iPhone 17 Pro Max,17 Pro Max,512,silver,esim,4219
+27,�iPhone 17 Pro / 17 Pro Max,�iPhone 17 Pro Max,17 Pro Max,512,blue,esim,4118
+28,�iPhone 17 Pro / 17 Pro Max,�iPhone 17 Pro Max,17 Pro Max,512,orange,sim+Esim,4552
+29,�iPhone 17 Pro / 17 Pro Max,�iPhone 17 Pro Max,17 Pro Max,512,blue,sim+Esim,4436
+30,�iPhone 17 Pro / 17 Pro Max,�iPhone 17 Pro Max,17 Pro Max,512,silver,sim+Esim,4566
+31,�iPhone 17 Pro / 17 Pro Max,�iPhone 17 Pro Max,17 pro max,1TB,orange,esim,4740
+32,�iPhone 17 Pro / 17 Pro Max,�iPhone 17 Pro Max,17 pro max,1TB,blue,esim,4740
+33,�iPhone 17 Pro / 17 Pro Max,�iPhone 17 Pro Max,17 pro max,1TB,silver,esim,4826
+34,�iPhone 17 Pro / 17 Pro Max,�iPhone 17 Pro Max,17 pro max,1TB,orange,sim+Esim,5231
+35,�iPhone 17 Pro / 17 Pro Max,�iPhone 17 Pro Max,17 pro max,1TB,blue,sim+Esim,5173
+36,�iPhone 17 Pro / 17 Pro Max,�iPhone 17 Pro Max,17 pro max,1TB,silver,sim+Esim,5202
+37,�iPhone 17 / 17 Air,�iPhone Air,Air,256,Black,eSim,2673
+38,�iPhone 17 / 17 Air,�iPhone Air,Air,256,White,eSim,2659
+39,�iPhone 17 / 17 Air,�iPhone Air,Air,256,Gold,eSim,2630
+40,�iPhone 17 / 17 Air,�iPhone Air,Air,256,Blue,eSim,2630
+41,�iPhone 17 / 17 Air,�iPhone 17e,17e,256,black,Esim,1951
+42,�iPhone 17 / 17 Air,�iPhone 17e,17e,256,white,Esim,1951
+43,�iPhone 17 / 17 Air,�iPhone 17e,17e,256,pink,Esim,1951
+44,�iPhone 17 / 17 Air,�iPhone 17e,17e,256,Black,Sim+eSim,2009
+45,�iPhone 17 / 17 Air,�iPhone 17e,17e,256,Pink,Sim+eSim,2009
+46,�iPhone 17 / 17 Air,�iPhone 17,17,256,Black,eSim,2485
+47,�iPhone 17 / 17 Air,�iPhone 17,17,256,White,eSim,2601
+48,�iPhone 17 / 17 Air,�iPhone 17,17,256,Blue,eSim,2457
+49,�iPhone 17 / 17 Air,�iPhone 17,17,256,Sage,eSim,2485
+50,�iPhone 17 / 17 Air,�iPhone 17,17,256,Lavender,eSim,2543
+51,�iPhone 17 / 17 Air,�iPhone 17,17,256,Black,Sim+eSim,2543
+52,�iPhone 17 / 17 Air,�iPhone 17,17,256,White,Sim+eSim,2543
+53,�iPhone 17 / 17 Air,�iPhone 17,17,256,Blue,Sim+eSim,2529
+54,�iPhone 17 / 17 Air,�iPhone 17,17,256,Sage,Sim+eSim,2558
+55,�iPhone 17 / 17 Air,�iPhone 17,17,256,Lavender,Sim+eSim,2601
+56,�iPhone 17 / 17 Air,�iPhone 17,17,512,black,Esim,3237
+57,�iPhone 17 / 17 Air,�iPhone 17,17,512,white,Esim,3266
+58,�iPhone 17 / 17 Air,�iPhone 17,17,512,lavander,Esim,3222
+59,�iPhone 17 / 17 Air,�iPhone 17,17,512,blue,ESIM,3237
+60,�iPhone 17 / 17 Air,�iPhone 17,17,512,black,Sim+Esim,3251
+61,�iPhone 17 / 17 Air,�iPhone 17,17,512,blue,Sim+Esim,3381
+62,�iPhone 17 / 17 Air,�iPhone 17,17,512,white,Sim+Esim,3266
+63,�iPhone 17 / 17 Air,�iPhone 17,17,512,sage,Sim+Esim,3352
+64,�iPhone 17 / 17 Air,�iPhone 17,17,512,lavender,Sim+Esim,3381
+65,�iPhone 16 / 16 Plus,�iPhone 16е,16е,128,GB,black,1763
+66,https://gadget-store.byedited111.6K13:44edited111.6K13:44🖥 IPAD / ПЛАНШЕТЫ,https: iPad 11,iPad 11,128GB,WiFi,blue,1321
+67,https://gadget-store.byedited111.6K13:44edited111.6K13:44🖥 IPAD / ПЛАНШЕТЫ,https: iPad 11,iPad 11,128GB,WiFi,silver,1358
+68,https://gadget-store.byedited111.6K13:44edited111.6K13:44🖥 IPAD / ПЛАНШЕТЫ,https: iPad 11,iPad 11,128GB,WiFi,pink,1373
+69,https://gadget-store.byedited111.6K13:44edited111.6K13:44🖥 IPAD / ПЛАНШЕТЫ,https: iPad 11,iPad 11,128GB,WiFi,yellow,1373
+70,https://gadget-store.byedited111.6K13:44edited111.6K13:44🖥 IPAD / ПЛАНШЕТЫ,https: iPad 11,iPad 11,256GB,WiFi,blue,1561
+71,https://gadget-store.byedited111.6K13:44edited111.6K13:44🖥 IPAD / ПЛАНШЕТЫ,https: iPad 11,iPad 11,256GB,WiFi,silver,1604
+72,https://gadget-store.byedited111.6K13:44edited111.6K13:44🖥 IPAD / ПЛАНШЕТЫ,https: iPad 11,iPad 11,256GB,WiFi,yellow,1561
+73,https://gadget-store.byedited111.6K13:44edited111.6K13:44🖥 IPAD / ПЛАНШЕТЫ,https: iPad 11,iPad 11,256GB,WiFi,pink,1590
+74,https://gadget-store.byedited111.6K13:44edited111.6K13:44🖥 IPAD / ПЛАНШЕТЫ,https: iPad Air 11 (M4) 2026,iPad Air 11 (M4) 2026,128,Space,Gray,2124
+75,https://gadget-store.byedited111.6K13:44edited111.6K13:44🖥 IPAD / ПЛАНШЕТЫ,https: iPad Air 11 (M4),iPad Air 11 (M4),2026,128,Purple,2182
+76,https://gadget-store.byedited111.6K13:44edited111.6K13:44🖥 IPAD / ПЛАНШЕТЫ,https: iPad Air 11 (M4),iPad Air 11 (M4),2026,128,blue,2081
+77,https://gadget-store.byedited111.6K13:44edited111.6K13:44🖥 IPAD / ПЛАНШЕТЫ,https: iPad Air 11 (M4),iPad Air 11 (M4),2026,128,Starlight,2182
+78,https://gadget-store.byedited111.6K13:44edited111.6K13:44🖥 IPAD / ПЛАНШЕТЫ,https: iPad Air 11 (M4) 2026,iPad Air 11 (M4) 2026,256,Space,Gray,2543
+79,https://gadget-store.byedited111.6K13:44edited111.6K13:44🖥 IPAD / ПЛАНШЕТЫ,https: iPad Air 11 (M4),iPad Air 11 (M4),2026,256,Purple,2587
+80,https://gadget-store.byedited111.6K13:44edited111.6K13:44🖥 IPAD / ПЛАНШЕТЫ,https: iPad Air 11 (M4),iPad Air 11 (M4),2026,256,Blue,2543
+81,https://gadget-store.byedited111.6K13:44edited111.6K13:44🖥 IPAD / ПЛАНШЕТЫ,https: iPad Air 11 (M4),iPad Air 11 (M4),2026,256,Starlight,2587
+82,https://gadget-store.byedited111.6K13:44edited111.6K13:44🖥 IPAD / ПЛАНШЕТЫ,https: iPad Air 13 (M4) 2026,iPad Air 13 (M4) 2026,128,Space,Gray,2601
+83,https://gadget-store.byedited111.6K13:44edited111.6K13:44🖥 IPAD / ПЛАНШЕТЫ,https: iPad Air 13 (M4),iPad Air 13 (M4),2026,128,starlight,2630
+84,https://gadget-store.byedited111.6K13:44edited111.6K13:44🖥 IPAD / ПЛАНШЕТЫ,https: iPad Air 13 (M4),iPad Air 13 (M4),2026,128,Blue,2601
+85,https://gadget-store.byedited111.6K13:44edited111.6K13:44🖥 IPAD / ПЛАНШЕТЫ,https: iPad Air 13 (M4),iPad Air 13 (M4),2026,128,Purple,2601
+86,https://gadget-store.bygadget-store.byGadgetStore - Гаджеты Apple Минскedited109.6K13:44edited109.6K13:44apple watch,https: SE3,SE3,40,Midnight,2025,824
+87,https://gadget-store.bygadget-store.byGadgetStore - Гаджеты Apple Минскedited109.6K13:44edited109.6K13:44apple watch,https: SE3,SE3,40,Starlight,2025,838
+88,https://gadget-store.bygadget-store.byGadgetStore - Гаджеты Apple Минскedited109.6K13:44edited109.6K13:44apple watch,https: SE3,SE3,44,Midnight,2025,881
+89,https://gadget-store.bygadget-store.byGadgetStore - Гаджеты Apple Минскedited109.6K13:44edited109.6K13:44apple watch,https: SE3,SE3,44,Starlight,2025,910
+90,https://gadget-store.bygadget-store.byGadgetStore - Гаджеты Apple Минскedited109.6K13:44edited109.6K13:44apple watch,https: S11,S11,42,Jet,Black,1078
+91,https://gadget-store.bygadget-store.byGadgetStore - Гаджеты Apple Минскedited109.6K13:44edited109.6K13:44apple watch,https: S11,S11,42,Space,Gray,1078
+92,https://gadget-store.bygadget-store.byGadgetStore - Гаджеты Apple Минскedited109.6K13:44edited109.6K13:44apple watch,https: S11,S11,42,Rose,Gold,1078
+93,https://gadget-store.bygadget-store.byGadgetStore - Гаджеты Apple Минскedited109.6K13:44edited109.6K13:44apple watch,https: S11,S11,46,Jet,Black,1170
+94,https://gadget-store.bygadget-store.byGadgetStore - Гаджеты Apple Минскedited109.6K13:44edited109.6K13:44apple watch,https: S11,S11,46,Space,Gray,1170
+95,https://gadget-store.bygadget-store.byGadgetStore - Гаджеты Apple Минскedited109.6K13:44edited109.6K13:44apple watch,https: S11,S11,46,Rose,Gold,1170
