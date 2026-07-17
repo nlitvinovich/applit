@@ -101,15 +101,18 @@
 </main>
 
 <script>
-// ОЧИСТКА HTML Telegram Web → превращаем в чистый текст
+// ОЧИСТКА HTML Telegram Web + удаление битых символов
 function cleanTelegramHTML(raw) {
   return raw
-    .replace(/<[^>]+>/g, "")        // удаляем все HTML-теги
+    .replace(/<[^>]+>/g, "")            // удаляем HTML-теги
+    .replace(/&nbsp;/g, " ")            // убираем HTML-пробелы
+    .replace(/&#\d+;/g, "")             // убираем HTML-entity
+    .replace(/[\uFFFD]/g, "")           // убираем символ �
+    .replace(/[^\S\r\n]+/g, " ")        // нормализуем пробелы
     .replace(/Channel created/gi, "")
     .replace(/June \d{1,2}, \d{4}/gi, "")
     .replace(/February \d{1,2}, \d{4}/gi, "")
-    .replace(/^\s+|\s+$/g, "")      // trim
-    .replace(/\n{2,}/g, "\n")       // убираем пустые строки
+    .replace(/\s{2,}/g, "\n")           // убираем двойные переносы
     .trim();
 }
 
