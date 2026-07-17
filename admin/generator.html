@@ -23,54 +23,54 @@ button:hover { background:#005bb5; }
 <textarea id="output" placeholder="CSV результат"></textarea>
 
 <script>
-
-// 1) ЖЁСТКАЯ очистка HTML Telegram Web
+// Жёсткая очистка HTML, но переносы строк сохраняем
 function clean(text) {
   return text
-    .replace(/<[^>]*>/g, "\n")          // удаляем HTML теги → перенос строки
+    .replace(/<br\s*\/?>/gi, "\n")      // br → перенос строки
+    .replace(/<\/p>/gi, "\n")          // конец абзаца → перенос
+    .replace(/<[^>]*>/g, "")           // остальные теги убираем
     .replace(/&nbsp;/g, " ")
     .replace(/&[a-zA-Z]+;/g, " ")
     .replace(/[\u{1F300}-\u{1FAFF}]/gu, "") // эмодзи
-    .replace(/[\uFFFD]/g, "")           // битые символы
-    .replace(/\s+/g, " ")
-    .replace(/\n+/g, "\n")
+    .replace(/[\uFFFD]/g, "")          // битые символы
+    .replace(/[ \t]+/g, " ")           // лишние пробелы, но НЕ трогаем \n
+    .replace(/\n{2,}/g, "\n")          // несколько переносов → один
     .trim();
 }
 
-// 2) Цена
+// Цена
 function extractPrice(line) {
   const m = line.match(/(\d+)\s*BYN/i);
   return m ? m[1] : null;
 }
 
-// 3) Модель = всё до цены
+// Модель = всё до " - цена BYN"
 function extractModel(line) {
-  return line.replace(/[-–—]\s*\d+\s*BYN/i, "").trim();
+  return line.replace(/\s*[-–—]\s*\d+\s*BYN/i, "").trim();
 }
 
 function generateCSV() {
   const raw = document.getElementById("input").value;
-
-  // очистка HTML
   const text = clean(raw);
 
-  // разбиваем на строки
-  const lines = text.split("\n").map(l => l.trim()).filter(Boolean);
+  const lines = text
+    .split("\n")
+    .map(l => l.trim())
+    .filter(l => l.length > 0);
 
   let id = 1;
   const rows = [];
 
   for (const line of lines) {
-
-    // ищем цену
     const price = extractPrice(line);
     if (!price) continue;
 
-    // модель = строка до цены
     const model = extractModel(line);
 
-    // фильтр: модель должна содержать хотя бы одно слово + память
-    if (!model.match(/\d/)) continue; // отсекаем мусор
+    // отсекаем служебный мусор без нормальной модели
+    if (!model.match(/\d/) && !model.match(/AirPods|iPad|MacBook|SE3|S11|Watch/i)) {
+      continue;
+    }
 
     rows.push({ id: id++, model, price });
   }
@@ -88,7 +88,6 @@ function copyCSV() {
   out.select();
   document.execCommand("copy");
 }
-
 </script>
 
 </body>
