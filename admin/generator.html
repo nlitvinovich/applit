@@ -23,25 +23,25 @@ button:hover { background:#005bb5; }
 <textarea id="output" placeholder="CSV результат"></textarea>
 
 <script>
-// Жёсткая очистка HTML, но переносы строк сохраняем
+// Очистка HTML Telegram Web, сохраняем переносы строк
 function clean(text) {
   return text
-    .replace(/<br\s*\/?>/gi, "\n")      // br → перенос строки
-    .replace(/<\/p>/gi, "\n")          // конец абзаца → перенос
-    .replace(/<[^>]*>/g, "")           // остальные теги убираем
+    .replace(/<br\s*\/?>/gi, "\n")
+    .replace(/<\/p>/gi, "\n")
+    .replace(/<[^>]*>/g, "")
     .replace(/&nbsp;/g, " ")
     .replace(/&[a-zA-Z]+;/g, " ")
-    .replace(/[\u{1F300}-\u{1FAFF}]/gu, "") // эмодзи
-    .replace(/[\uFFFD]/g, "")          // битые символы
-    .replace(/[ \t]+/g, " ")           // лишние пробелы, но НЕ трогаем \n
-    .replace(/\n{2,}/g, "\n")          // несколько переносов → один
+    .replace(/[\u{1F300}-\u{1FAFF}]/gu, "")
+    .replace(/[\uFFFD]/g, "")
+    .replace(/[ \t]+/g, " ")
+    .replace(/\n{2,}/g, "\n")
     .trim();
 }
 
 // Цена
 function extractPrice(line) {
   const m = line.match(/(\d+)\s*BYN/i);
-  return m ? m[1] : null;
+  return m ? parseInt(m[1]) : null;
 }
 
 // Модель = всё до " - цена BYN"
@@ -53,21 +53,21 @@ function generateCSV() {
   const raw = document.getElementById("input").value;
   const text = clean(raw);
 
-  const lines = text
-    .split("\n")
-    .map(l => l.trim())
-    .filter(l => l.length > 0);
+  const lines = text.split("\n").map(l => l.trim()).filter(Boolean);
 
   let id = 1;
   const rows = [];
 
   for (const line of lines) {
-    const price = extractPrice(line);
+    let price = extractPrice(line);
     if (!price) continue;
+
+    // округление до ближайших 5 BYN
+    price = Math.round(price / 5) * 5;
 
     const model = extractModel(line);
 
-    // отсекаем служебный мусор без нормальной модели
+    // фильтр мусора
     if (!model.match(/\d/) && !model.match(/AirPods|iPad|MacBook|SE3|S11|Watch/i)) {
       continue;
     }
