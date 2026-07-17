@@ -107,19 +107,22 @@ function parseTelegramToCSV(inputText) {
   let id = 1;
   const rows = [];
 
-  const categoryRegex = /^📱\s*(.+)$/i;
-  // базовый паттерн: name memory color sim - price BYN
-  const productRegex = /^(.+?)\s+(\d+(?:TB|GB)?)\s+([\w/]+)\s+([\w+]+)\s*-\s*(\d+)\s*BYN/i;
+  // Категории: iPhone, iPad, MacBook, Watch, AirPods
+  const categoryRegex = /^[📱🖥💻⌚🎧]\s*(.+)$/i;
+
+  // Универсальный парсер строки товара
+  const productRegex = /^(.+?)\s+(\d+(?:TB|GB)?)\s+([\wА-Яа-я+]+)\s+([\w+]+)\s*-\s*(\d+)\s*BYN/i;
 
   for (const line of lines) {
-    // категория
+
+    // Категория
     const catMatch = line.match(categoryRegex);
     if (catMatch) {
       category = catMatch[1].trim();
       continue;
     }
 
-    // товар
+    // Товар
     const prodMatch = line.match(productRegex);
     if (prodMatch) {
       const name = prodMatch[1].trim();
@@ -142,34 +145,4 @@ function parseTelegramToCSV(inputText) {
 
   let csv = "id,category,name,memory,color,sim,price\n";
   rows.forEach(r => {
-    csv += `${r.id},${escapeCSV(r.category)},${escapeCSV(r.name)},${escapeCSV(r.memory)},${escapeCSV(r.color)},${escapeCSV(r.sim)},${r.price}\n`;
-  });
-
-  return csv;
-}
-
-function escapeCSV(value) {
-  if (value == null) return "";
-  const v = String(value);
-  if (v.includes(",") || v.includes('"')) {
-    return `"${v.replace(/"/g, '""')}"`;
-  }
-  return v;
-}
-
-function generateCSV() {
-  const text = document.getElementById("input").value;
-  const csv = parseTelegramToCSV(text);
-  document.getElementById("output").value = csv;
-}
-
-function copyCSV() {
-  const out = document.getElementById("output");
-  out.select();
-  out.setSelectionRange(0, 999999);
-  document.execCommand("copy");
-}
-</script>
-
-</body>
-</html>
+    csv += `${r.id},${escapeCSV(r.category)},${escapeCSV(r.name)},${escapeCSV(r.memory)},${
