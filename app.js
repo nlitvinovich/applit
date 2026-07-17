@@ -1,44 +1,48 @@
-let products = [];
+// Загружаем CSV и превращаем в массив объектов
+async function loadProducts() {
+  const response = await fetch('products.csv');
+  const text = await response.text();
 
-// Загружаем CSV
-fetch("products.csv")
-  .then(res => res.text())
-  .then(text => {
-    const lines = text.split("\n").slice(1); // пропускаем заголовок
-    products = lines
-      .filter(line => line.trim().length > 0)
-      .map(line => {
-        const [id, category, name, memory, color, sim, price] = line.split(",");
-        return { id, category, name, memory, color, sim, price };
-      });
+  const lines = text.trim().split('\n');
+  const headers = lines[0].split(',');
 
-    render(products);
-  })
-  .catch(err => console.error("Ошибка загрузки CSV:", err));
+  const products = lines.slice(1).map(line => {
+    const values = line.split(',');
+    const obj = {};
+    headers.forEach((h, i) => obj[h.trim()] = values[i].trim());
+    return obj;
+  });
 
+  return products;
+}
 
 // Рендер каталога
-function render(list) {
-  const catalog = document.getElementById("catalog");
-  catalog.innerHTML = "";
+function renderProducts(list) {
+  const container = document.getElementById('catalog');
+  container.innerHTML = '';
 
   list.forEach(p => {
-    const card = document.createElement("div");
-    card.className = "card";
-    card.innerHTML = `
-      <h3>${p.name}</h3>
-      <p><b>Категория:</b> ${p.category}</p>
-      <p><b>Память:</b> ${p.memory}</p>
-      <p><b>Цвет:</b> ${p.color}</p>
-      <p><b>SIM:</b> ${p.sim}</p>
-      <p><b>Цена:</b> ${p.price} BYN</p>
+    const item = document.createElement('div');
+    item.className = 'product-item';
+    item.innerHTML = `
+      <div class="model">${p.model}</div>
+      <div class="price">${p.price} BYN</div>
     `;
-    catalog.appendChild(card);
+    container.appendChild(item);
   });
 }
 
+// Инициализация
+let allProducts = [];
 
-// Фильтр по категории
-function filterCategory(cat) {
-  render(products.filter(p => p.category === cat));
-}
+loadProducts().then(data => {
+  allProducts = data;
+  renderProducts(allProducts);
+});
+
+// Поиск
+document.getElementById('search').addEventListener('input', function() {
+  const q = this.value.toLowerCase().trim();
+  const filtered = allProducts.filter(p => p.model.toLowerCase().includes(q));
+  renderProducts(filtered);
+});
