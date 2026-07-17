@@ -101,63 +101,36 @@
 </main>
 
 <script>
-// ОЧИСТКА HTML Telegram Web + удаление всех битых символов
+// МЯГКАЯ очистка HTML — НЕ удаляем текст!
 function cleanTelegramHTML(raw) {
   return raw
-    // удаляем HTML-теги
-    .replace(/<[^>]+>/g, "")
-
-    // удаляем HTML-сущности
+    .replace(/<[^>]+>/g, "")        // удаляем HTML-теги
     .replace(/&nbsp;/g, " ")
     .replace(/&#\d+;/g, "")
-    .replace(/&[a-zA-Z]+;/g, "")
-
-    // удаляем символы �
-    .replace(/\uFFFD/g, "")
-
-    // удаляем управляющие символы
-    .replace(/[\u0000-\u001F\u007F-\u009F]/g, "")
-
-    // удаляем битые emoji (одиночные surrogate-пары)
-    .replace(/[\uD800-\uDBFF](?![\uDC00-\uDFFF])/g, "")
-    .replace(/(?![\uD800-\uDBFF])[\uDC00-\uDFFF]/g, "")
-
-    // удаляем символы вне диапазона BMP
-    .replace(/[^\u0000-\uFFFF]/g, "")
-
-    // нормализуем пробелы
-    .replace(/[^\S\r\n]+/g, " ")
-
-    // удаляем даты Telegram
-    .replace(/Channel created/gi, "")
-    .replace(/(January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2},\s+\d{4}/gi, "")
-
-    // убираем лишние переносы
-    .replace(/\n{2,}/g, "\n")
-
+    .replace(/[\uFFFD]/g, "")       // убираем �
+    .replace(/[^\S\r\n]+/g, " ")    // нормализуем пробелы
+    .replace(/\s{2,}/g, "\n")       // убираем двойные переносы
     .trim();
 }
 
-// ОСНОВНОЙ ПАРСЕР
-function parseTelegramToCSV(inputText) {
-  const lines = inputText.split("\n").map(l => l.trim()).filter(l => l.length > 0);
+// ПАРСЕР
+function parseTelegramToCSV(text) {
+  const lines = text.split("\n").map(l => l.trim()).filter(l => l.length > 0);
 
   let category = "";
   let id = 1;
   const rows = [];
 
   const categoryEmojiRegex = /^[📱🖥💻⌚🎧]\s*(.+)$/i;
-  const categoryPlainRegex =
-    /^(?!.*\d+\s*BYN)(?!.*\b(GB|TB)\b)(?!.*\b(esim|sim|wifi|cellular)\b).+$/i;
+  const categoryPlainRegex = /^[A-Za-zА-Яа-я0-9 ].+$/i;
 
+  // Гибкая регулярка товара
   const productRegex =
-    /^(.+?)\s+(\d+(?:TB|GB)?)\s+([\wА-Яа-я+]+)\s+([\w+]+)\s*-\s*(\d+)\s*BYN/i;
+    /^(.+?)\s+(\d+(?:TB|GB))\s+([\wА-Яа-я+]+)\s+([\w+]+)\s*[-–—]\s*(\d+)\s*(?:BYN)?/i;
 
   function detectModel(category, namePart) {
     const base = category.split("/")[0].trim();
-    const words = base.split(" ");
-    const deviceType = words[0];
-
+    const deviceType = base.split(" ")[0];
     const cleaned = namePart
       .replace(/pro/i, "Pro")
       .replace(/max/i, "Max")
@@ -165,75 +138,52 @@ function parseTelegramToCSV(inputText) {
       .replace(/plus/i, "Plus")
       .replace(/ultra/i, "Ultra")
       .trim();
-
     return `${deviceType} ${cleaned}`;
   }
 
   for (const line of lines) {
 
-    const emojiMatch = line.match(categoryEmojiRegex);
-    if (emojiMatch) {
-      category = emojiMatch[1].trim();
+    if (line.match(categoryEmojiRegex)) {
+      category = line.match(categoryEmojiRegex)[1].trim();
       continue;
     }
 
-    const plainMatch = line.match(categoryPlainRegex);
-    if (plainMatch) {
-      category = plainMatch[0].trim();
+    if (!line.match(productRegex) && line.match(categoryPlainRegex)) {
+      category = line.trim();
       continue;
     }
 
-    const prodMatch = line.match(productRegex);
-    if (prodMatch) {
-      const name = prodMatch[1].trim();
-      const memory = prodMatch[2].trim();
-      const color = prodMatch[3].trim();
-      const sim = prodMatch[4].trim();
-      const price = prodMatch[5].trim();
-
+    const m = line.match(productRegex);
+    if (m) {
+      const name = m[1].trim();
+      const memory = m[2].trim();
+      const color = m[3].trim();
+      const sim = m[4].trim();
+      const price = m[5].trim();
       const model = detectModel(category, name);
 
-      rows.push({
-        id: id++,
-        category,
-        model,
-        name,
-        memory,
-        color,
-        sim,
-        price
-      });
+      rows.push({ id: id++, category, model, name, memory, color, sim, price });
     }
   }
 
   let csv = "id,category,model,name,memory,color,sim,price\n";
   rows.forEach(r => {
-    csv += `${r.id},${escapeCSV(r.category)},${escapeCSV(r.model)},${escapeCSV(r.name)},${escapeCSV(r.memory)},${escapeCSV(r.color)},${escapeCSV(r.sim)},${r.price}\n`;
+    csv += `${r.id},${r.category},${r.model},${r.name},${r.memory},${r.color},${r.sim},${r.price}\n`;
   });
 
   return csv;
 }
 
-function escapeCSV(value) {
-  if (!value) return "";
-  const v = String(value);
-  if (v.includes(",") || v.includes('"')) {
-    return `"${v.replace(/"/g, '""')}"`;
-  }
-  return v;
-}
-
 function generateCSV() {
   const raw = document.getElementById("input").value;
-  const text = cleanTelegramHTML(raw);
-  const csv = parseTelegramToCSV(text);
+  const clean = cleanTelegramHTML(raw);
+  const csv = parseTelegramToCSV(clean);
   document.getElementById("output").value = csv;
 }
 
 function copyCSV() {
   const out = document.getElementById("output");
   out.select();
-  out.setSelectionRange(0, 999999);
   document.execCommand("copy");
 }
 </script>
