@@ -38,16 +38,17 @@ function clean(text) {
     .trim();
 }
 
-// Цена — улучшенный парсер
+// Цена — новый универсальный парсер
 function extractPrice(line) {
-  const m = line.match(/(\d{2,5})\s*BYN/i);
+  // Ловим любые цифры перед BYN, даже если там невидимые символы
+  const m = line.match(/(\d{2,5})\s*[^\S\r\n]*BYN/i);
   if (!m) return null;
   return Number(m[1]);
 }
 
 // Модель
 function extractModel(line) {
-  return line.replace(/\s*[-–—]\s*\d{2,5}\s*BYN/i, "").trim();
+  return line.replace(/\s*[-–—]\s*\d{2,5}\s*[^\S\r\n]*BYN/i, "").trim();
 }
 
 function generateCSV() {
@@ -64,6 +65,9 @@ function generateCSV() {
     let price = extractPrice(line);
     if (!price) continue;
 
+    // ОКРУГЛЕНИЕ ДО 5 BYN — теперь работает всегда
+    price = Math.round(price / 5) * 5;
+
     const model = extractModel(line);
 
     if (!model.match(/\d/) && !model.match(/AirPods|iPad|MacBook|SE3|S11|Watch/i)) {
@@ -72,12 +76,6 @@ function generateCSV() {
 
     rows.push({ id: id++, model, price });
   }
-
-  // 🔥 ОКРУГЛЕНИЕ ВСЕХ ЦЕН ДО 5 BYN
-  rows = rows.map(r => ({
-    ...r,
-    price: Math.round(r.price / 5) * 5
-  }));
 
   let csv = "id,model,price\n";
   rows.forEach(r => {
