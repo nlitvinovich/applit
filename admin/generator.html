@@ -23,7 +23,7 @@ button:hover { background:#005bb5; }
 <textarea id="output" placeholder="CSV результат"></textarea>
 
 <script>
-// Очистка HTML Telegram Web, сохраняем переносы строк
+// Очистка HTML Telegram Web
 function clean(text) {
   return text
     .replace(/<br\s*\/?>/gi, "\n")
@@ -38,15 +38,16 @@ function clean(text) {
     .trim();
 }
 
-// Цена
+// Цена — улучшенный парсер
 function extractPrice(line) {
-  const m = line.match(/(\d+)\s*BYN/i);
-  return m ? Number(m[1]) : null; // ← ВАЖНО: преобразуем в число
+  const m = line.match(/(\d{2,5})\s*BYN/i);
+  if (!m) return null;
+  return Number(m[1]); // гарантированно число
 }
 
-// Модель = всё до " - цена BYN"
+// Модель
 function extractModel(line) {
-  return line.replace(/\s*[-–—]\s*\d+\s*BYN/i, "").trim();
+  return line.replace(/\s*[-–—]\s*\d{2,5}\s*BYN/i, "").trim();
 }
 
 function generateCSV() {
@@ -59,10 +60,11 @@ function generateCSV() {
   const rows = [];
 
   for (const line of lines) {
+
     let price = extractPrice(line);
     if (!price) continue;
 
-    // ОКРУГЛЕНИЕ ДО 5 BYN — теперь работает
+    // ОКРУГЛЕНИЕ ДО 5 BYN — теперь работает всегда
     price = Math.round(price / 5) * 5;
 
     const model = extractModel(line);
