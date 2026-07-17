@@ -42,7 +42,7 @@ function clean(text) {
 function extractPrice(line) {
   const m = line.match(/(\d{2,5})\s*BYN/i);
   if (!m) return null;
-  return Number(m[1]); // гарантированно число
+  return Number(m[1]);
 }
 
 // Модель
@@ -57,25 +57,27 @@ function generateCSV() {
   const lines = text.split("\n").map(l => l.trim()).filter(Boolean);
 
   let id = 1;
-  const rows = [];
+  let rows = [];
 
   for (const line of lines) {
 
     let price = extractPrice(line);
     if (!price) continue;
 
-    // ОКРУГЛЕНИЕ ДО 5 BYN — теперь работает всегда
-    price = Math.round(price / 5) * 5;
-
     const model = extractModel(line);
 
-    // фильтр мусора
     if (!model.match(/\d/) && !model.match(/AirPods|iPad|MacBook|SE3|S11|Watch/i)) {
       continue;
     }
 
     rows.push({ id: id++, model, price });
   }
+
+  // 🔥 ОКРУГЛЕНИЕ ВСЕХ ЦЕН ДО 5 BYN
+  rows = rows.map(r => ({
+    ...r,
+    price: Math.round(r.price / 5) * 5
+  }));
 
   let csv = "id,model,price\n";
   rows.forEach(r => {
