@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<title>CSV Generator</title>
+<title>Model → Price CSV Generator</title>
 <style>
 body { font-family: Arial; background:#f5f5f5; padding:20px; }
 textarea { width:100%; height:350px; padding:10px; border-radius:8px; border:1px solid #ccc; }
@@ -13,9 +13,9 @@ button:hover { background:#005bb5; }
 
 <body>
 
-<h2>Telegram → CSV Generator</h2>
+<h2>Model → Price CSV Generator</h2>
 
-<textarea id="input" placeholder="Вставь текст из Telegram"></textarea>
+<textarea id="input" placeholder="Вставь HTML из Telegram Web"></textarea>
 <br><br>
 <button onclick="generateCSV()">Сгенерировать CSV</button>
 <button onclick="copyCSV()">Скопировать CSV</button>
@@ -24,87 +24,99 @@ button:hover { background:#005bb5; }
 
 <script>
 
-// Удаляем HTML, эмодзи, символы �
+// Мягкая очистка HTML
 function clean(text) {
   return text
-    .replace(/<[^>]+>/g, "")
-    .replace(/[\u{1F300}-\u{1FAFF}]/gu, "")
-    .replace(/[\uFFFD]/g, "")
+    .replace(/<[^>]+>/g, "")        // HTML теги
+    .replace(/[\u{1F300}-\u{1FAFF}]/gu, "") // эмодзи
+    .replace(/[\uFFFD]/g, "")       // битые символы
     .replace(/\s+/g, " ")
     .replace(/\n\s+/g, "\n")
     .trim();
 }
 
-// Определение категории
-function detectCategory(line) {
-  if (/iPhone/i.test(line)) return "iPhone";
-  if (/iPad/i.test(line)) return "iPad";
-  if (/MacBook/i.test(line)) return "MacBook";
-  if (/AirPods/i.test(line)) return "AirPods";
-  if (/Watch|SE3|S11/i.test(line)) return "Watch";
+// Определение модели из строки
+function detectModel(line) {
+  // iPhone
+  if (/17 pro max/i.test(line)) return "iPhone 17 Pro Max";
+  if (/17 pro/i.test(line)) return "iPhone 17 Pro";
+  if (/17e/i.test(line)) return "iPhone 17e";
+  if (/^17 /i.test(line)) return "iPhone 17";
+  if (/16 pro max/i.test(line)) return "iPhone 16 Pro Max";
+  if (/16 pro/i.test(line)) return "iPhone 16 Pro";
+  if (/16 plus/i.test(line)) return "iPhone 16 Plus";
+  if (/^16 /i.test(line)) return "iPhone 16";
+  if (/15 plus/i.test(line)) return "iPhone 15 Plus";
+  if (/^15 /i.test(line)) return "iPhone 15";
+  if (/^14 /i.test(line)) return "iPhone 14";
+  if (/^13 /i.test(line)) return "iPhone 13";
+
+  // iPad
+  if (/iPad Air 13/i.test(line)) return "iPad Air 13";
+  if (/iPad Air 11/i.test(line)) return "iPad Air 11";
+  if (/iPad Pro 13/i.test(line)) return "iPad Pro 13";
+  if (/iPad Pro 11/i.test(line)) return "iPad Pro 11";
+  if (/iPad 11/i.test(line)) return "iPad 11";
+
+  // MacBook
+  if (/MacBook Neo 13/i.test(line)) return "MacBook Neo 13";
+  if (/Air 13 M4/i.test(line)) return "MacBook Air 13 M4";
+  if (/Air 13 M5/i.test(line)) return "MacBook Air 13 M5";
+  if (/Air 15 M5/i.test(line)) return "MacBook Air 15 M5";
+
+  // Watch
+  if (/SE3 40/i.test(line)) return "Watch SE3 40";
+  if (/SE3 44/i.test(line)) return "Watch SE3 44";
+  if (/S11 42/i.test(line)) return "Watch S11 42";
+  if (/S11 46/i.test(line)) return "Watch S11 46";
+  if (/Ultra/i.test(line)) return "Watch Ultra";
+
+  // AirPods
+  if (/AirPods 4 ANC/i.test(line)) return "AirPods 4 ANC";
+  if (/AirPods 4/i.test(line)) return "AirPods 4";
+  if (/AirPods Pro 3/i.test(line)) return "AirPods Pro 3";
+  if (/AirPods Pro 2/i.test(line)) return "AirPods Pro 2";
+  if (/AirPods Max/i.test(line)) return "AirPods Max";
+  if (/AirPods MAX 2/i.test(line)) return "AirPods Max 2";
+
+  // Accessories
+  if (/Pencil 3gen/i.test(line)) return "Pencil 3gen";
+  if (/Pencil Pro/i.test(line)) return "Pencil Pro";
+  if (/Magic Mouse/i.test(line)) return "Magic Mouse";
+  if (/AirTag 1/i.test(line)) return "AirTag 1";
+  if (/AirTag 4 Шт/i.test(line)) return "AirTag 4";
+  if (/AirTag 4Pac/i.test(line)) return "AirTag 4Pac";
+
   return null;
 }
 
-// Определение модели
-function detectModel(category, name) {
-  if (!category) return "";
-  const base = category.split("/")[0].trim();
-  const device = base.split(" ")[0];
-  return device + " " + name.split(" ")[0];
-}
-
 // Парсер строки товара
-function parseProduct(line) {
-  const regex = /^(.+?)\s+(\d+(?:TB|GB|\/\d+|\d+))\s+([\wА-Яа-я+]+)\s+([\w+]+)\s*[-–—]\s*(\d+)\s*BYN/i;
-  const m = line.match(regex);
-  if (!m) return null;
-
-  return {
-    name: m[1].trim(),
-    memory: m[2].trim(),
-    color: m[3].trim(),
-    sim: m[4].trim(),
-    price: m[5].trim()
-  };
+function parsePrice(line) {
+  const m = line.match(/(\d+)\s*BYN/i);
+  return m ? m[1] : null;
 }
 
 function generateCSV() {
   const raw = document.getElementById("input").value;
   const text = clean(raw);
 
-  const lines = text.split("\n").map(l => l.trim()).filter(l => l.length > 0);
+  const lines = text.split("\n").map(l => l.trim()).filter(Boolean);
 
-  let category = "";
   let id = 1;
   const rows = [];
 
   for (const line of lines) {
+    const model = detectModel(line);
+    const price = parsePrice(line);
 
-    const cat = detectCategory(line);
-    if (cat) {
-      category = line.replace(/📱|🖥|🔥/g, "").trim();
-      continue;
-    }
-
-    const prod = parseProduct(line);
-    if (prod) {
-      const model = detectModel(category, prod.name);
-      rows.push({
-        id: id++,
-        category,
-        model,
-        name: prod.name,
-        memory: prod.memory,
-        color: prod.color,
-        sim: prod.sim,
-        price: prod.price
-      });
+    if (model && price) {
+      rows.push({ id: id++, model, price });
     }
   }
 
-  let csv = "id,category,model,name,memory,color,sim,price\n";
+  let csv = "id,model,price\n";
   rows.forEach(r => {
-    csv += `${r.id},${r.category},${r.model},${r.name},${r.memory},${r.color},${r.sim},${r.price}\n`;
+    csv += `${r.id},${r.model},${r.price}\n`;
   });
 
   document.getElementById("output").value = csv;
