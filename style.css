@@ -28,20 +28,24 @@ body {
   background: #fff;
 }
 
-/* Время обновления */
+/* Время обновления — центрируем */
 #update-time {
   max-width: 600px;
   margin: 10px auto;
   font-size: 14px;
   color: #666;
   padding: 0 16px;
+  text-align: center;
 }
 
-/* Каталог */
+/* Каталог — центрируем карточки */
 #catalog {
   max-width: 600px;
   margin: 0 auto;
   padding: 0 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 /* Карточка */
@@ -54,6 +58,8 @@ body {
     0 2px 4px rgba(0,0,0,0.04),
     0 8px 24px rgba(0,0,0,0.08);
   position: relative;
+  width: 100%;
+  max-width: 600px;
 }
 
 .card-title {
