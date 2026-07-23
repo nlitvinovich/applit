@@ -1,165 +1,11 @@
-body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
-  background: #f5f5f7;
-  margin: 0;
-  padding-bottom: 140px;
-}
-
-/* Панель поиска */
-.search-bar-wrapper {
-  position: sticky;
-  top: 0;
-  z-index: 200;
-  background: #f5f5f7;
-  padding: 12px 0;
-  backdrop-filter: blur(12px);
-  box-shadow: 0 1px 0 rgba(0,0,0,0.08);
-}
-
-#search {
-  width: 100%;
-  max-width: 600px;
-  margin: 0 auto;
-  display: block;
-  padding: 14px 16px;
-  font-size: 17px;
-  border-radius: 12px;
-  border: 1px solid rgba(0,0,0,0.12);
-  background: #fff;
-}
-
-/* Время обновления */
-#update-time {
-  max-width: 600px;
-  margin: 10px auto;
-  font-size: 14px;
-  color: #666;
-  padding: 0 16px;
-}
-
-/* Каталог */
-#catalog {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 0 16px;
-}
-
-/* Карточка */
-.card {
-  background: #fff;
-  border-radius: 16px;
-  padding: 20px;
-  margin-bottom: 16px;
-  box-shadow:
-    0 2px 4px rgba(0,0,0,0.04),
-    0 8px 24px rgba(0,0,0,0.08);
-  position: relative;
-}
-
-.card-title {
-  font-size: 18px;
-  font-weight: 600;
-  color: #111;
-  margin-bottom: 8px;
-}
-
-/* Кнопка корзины — чёрная */
-.add-to-cart {
-  position: absolute;
-  right: 20px;
-  top: 20px;
-  padding: 6px 10px;
-  font-size: 16px;
-  background: transparent;
-  color: #111;
-  border: 1px solid #111;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: background .2s, color .2s;
-}
-
-.add-to-cart:hover {
-  background: #111;
-  color: #fff;
-}
-
-/* Цена */
-.card-price {
-  font-size: 17px;
-  font-weight: 600;
-  color: #0071e3;
-  margin-top: 12px;
-}
-
-/* Модальное окно корзины */
-.cart-modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.35);
-  display: none;
-  justify-content: center;
-  align-items: center;
-  z-index: 400;
-}
-
-.cart-content {
-  background: #fff;
-  padding: 20px;
-  border-radius: 16px;
-  width: 90%;
-  max-width: 400px;
-  position: relative;
-}
-
-/* Кнопка закрытия корзины */
-.cart-close-btn {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  background: #111;
-  color: #fff;
-  border: none;
-  border-radius: 50%;
-  width: 32px;
-  height: 32px;
-  font-size: 18px;
-  cursor: pointer;
-}
-
-/* Элемент корзины */
-.cart-item {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 12px;
-  font-size: 16px;
-}
-
-.cart-remove {
-  background: transparent;
-  border: none;
-  color: #d00;
-  font-size: 18px;
-  cursor: pointer;
-}
-
-/* Итоговая сумма */
-.cart-total {
-  font-size: 18px;
-  font-weight: 600;
-  margin-top: 20px;
-  text-align: right;
-}
-
-/* Нижний таббар */
+/* Нижний таббар — одна кнопка корзины */
 .tabbar {
   position: fixed;
   bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
-  width: 92%;
+  width: auto;
+  padding: 0 24px;
   height: 60px;
 
   background: rgba(245, 245, 247, 0.9);
@@ -170,7 +16,7 @@ body {
   box-shadow: 0 4px 18px rgba(0,0,0,0.12);
 
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
 
   transition: bottom 0.35s ease, opacity 0.25s ease;
