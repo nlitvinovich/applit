@@ -51,28 +51,45 @@ button:hover {
 
 <h2>Генератор CSV для NLAppleLab</h2>
 
-<textarea id="input" placeholder="Вставь сюда весь Telegram-пост (даже HTML)"></textarea>
+<textarea id="input" placeholder="Вставь сюда HTML Telegram-поста"></textarea>
 
 <button onclick="generateCSV()">Сгенерировать CSV</button>
 
 <pre id="output"></pre>
 
 <script>
-function generateCSV() {
-  let raw = document.getElementById('input').value;
+function extractTextFromHTML(html) {
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(html, "text/html");
 
-  // 1) Удаляем HTML-теги
-  raw = raw.replace(/<[^>]+>/g, ' ');
+  // Берём ВСЕ текстовые узлы
+  const walker = document.createTreeWalker(doc.body, NodeFilter.SHOW_TEXT);
+  let text = "";
+
+  while (walker.nextNode()) {
+    const t = walker.currentNode.nodeValue.trim();
+    if (t.length > 0) {
+      text += t + "\n";
+    }
+  }
+
+  return text;
+}
+
+function generateCSV() {
+  let html = document.getElementById('input').value;
+
+  // 1) Вытаскиваем текст из HTML
+  let rawText = extractTextFromHTML(html);
 
   // 2) Удаляем эмодзи
-  raw = raw.replace(/[\u{1F300}-\u{1FAFF}]/gu, '');
+  rawText = rawText.replace(/[\u{1F300}-\u{1FAFF}]/gu, '');
 
-  // 3) Удаляем лишние символы Telegram
-  raw = raw.replace(/edited|Views|Telegram|instagram|Наш Сайт/gi, '');
-  raw = raw.replace(/\s+/g, ' ');
+  // 3) Удаляем мусор
+  rawText = rawText.replace(/edited|Views|Telegram|instagram|Наш Сайт/gi, '');
 
   // 4) Разбиваем на строки
-  const lines = raw.split(/[\n\r]+/).map(l => l.trim());
+  const lines = rawText.split('\n').map(l => l.trim());
 
   // авто‑таймстамп
   const now = new Date();
@@ -101,7 +118,6 @@ function generateCSV() {
     // убираем BYN
     line = line.replace(/BYN/gi, '').trim();
 
-    // парсим модель и цену
     const parts = line.split('-');
     if (parts.length < 2) return;
 
@@ -110,7 +126,6 @@ function generateCSV() {
 
     if (isNaN(price)) return;
 
-    // округление до десятков
     price = Math.round(price / 10) * 10;
 
     csv += `${id},${model},${price}\n`;
@@ -119,7 +134,3 @@ function generateCSV() {
 
   document.getElementById('output').textContent = csv;
 }
-</script>
-
-</body>
-</html>
