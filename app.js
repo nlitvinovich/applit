@@ -125,7 +125,7 @@ document.getElementById('cart-order-btn').addEventListener('click', () => {
 /* Кнопка поделиться каталогом — нативное окно */
 document.getElementById('share-catalog-btn').addEventListener('click', async () => {
   const shareText =
-    "Лови каталог appLit!\nОткрой в Safari → Поделиться → Добавить на экран Домой\nКороче, как мы делали с АльфаБанком :)\nhttps://applit-zeta.vercel.app/";
+    "Лови каталог appLit!\nОткрой в Safari → Поделиться → Добавить на экран Домой\nКороче, как мы делали с АльфаБанком :)\nhttps://applitcat.vercel.app/";
 
   const shareData = {
     title: "Каталог appLit",
