@@ -58,37 +58,26 @@ button:hover {
 <pre id="output"></pre>
 
 <script>
-function extractTextFromHTML(html) {
-  const parser = new DOMParser();
-  const doc = parser.parseFromString(html, "text/html");
+function extractText(html) {
+  // 1) Удаляем все теги
+  let text = html.replace(/<[^>]+>/g, '\n');
 
-  // Берём ВСЕ текстовые узлы
-  const walker = document.createTreeWalker(doc.body, NodeFilter.SHOW_TEXT);
-  let text = "";
+  // 2) Удаляем эмодзи
+  text = text.replace(/[\u{1F300}-\u{1FAFF}]/gu, '');
 
-  while (walker.nextNode()) {
-    const t = walker.currentNode.nodeValue.trim();
-    if (t.length > 0) {
-      text += t + "\n";
-    }
-  }
+  // 3) Убираем двойные переносы
+  text = text.replace(/\n+/g, '\n');
 
   return text;
 }
 
 function generateCSV() {
-  let html = document.getElementById('input').value;
+  const html = document.getElementById('input').value;
 
-  // 1) Вытаскиваем текст из HTML
-  let rawText = extractTextFromHTML(html);
+  // Вытаскиваем текст
+  const rawText = extractText(html);
 
-  // 2) Удаляем эмодзи
-  rawText = rawText.replace(/[\u{1F300}-\u{1FAFF}]/gu, '');
-
-  // 3) Удаляем мусор
-  rawText = rawText.replace(/edited|Views|Telegram|instagram|Наш Сайт/gi, '');
-
-  // 4) Разбиваем на строки
+  // Разбиваем на строки
   const lines = rawText.split('\n').map(l => l.trim());
 
   // авто‑таймстамп
@@ -132,5 +121,3 @@ function generateCSV() {
     id++;
   });
 
-  document.getElementById('output').textContent = csv;
-}
