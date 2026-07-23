@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -12,22 +13,30 @@
 <textarea id="input" style="width:100%;height:300px;"></textarea>
 <br><br>
 
-<button id="btn">Сгенерировать CSV</button>
+<button id="btn-generate">Сгенерировать CSV</button>
+<button id="btn-download">Скачать CSV</button>
 
 <pre id="output" style="white-space:pre;margin-top:20px;background:#eee;padding:10px;"></pre>
 
 <script>
+// --------------------
+// Вытаскиваем текст из HTML (работает даже с DOCX)
+// --------------------
+function extractText(html) {
+  let text = html.replace(/<[^>]+>/g, '\n');   // удаляем теги
+  text = text.replace(/\n+/g, '\n');          // чистим переносы
+  text = text.replace(/[\u{1F300}-\u{1FAFF}]/gu, ''); // удаляем эмодзи
+  return text;
+}
+
+// --------------------
+// Генерация CSV
+// --------------------
 function generateCSV() {
   const html = document.getElementById('input').value;
 
-  // Вытаскиваем текст между тегами
-  let text = html.replace(/<[^>]+>/g, '\n');
-  text = text.replace(/\n+/g, '\n');
-
-  // Удаляем эмодзи
-  text = text.replace(/[\u{1F300}-\u{1FAFF}]/gu, '');
-
-  const lines = text.split('\n').map(l => l.trim());
+  const rawText = extractText(html);
+  const lines = rawText.split('\n').map(l => l.trim());
 
   // авто‑таймстамп
   const now = new Date();
@@ -45,7 +54,7 @@ function generateCSV() {
   lines.forEach(line => {
     if (!line) return;
 
-    if (!line.match(/\d+\s*BYN/i)) return;
+    if (!line.match(/\d+\s*BYN/i)) return; // ищем строки с ценой
 
     line = line.replace(/—/g, '-').replace(/–/g, '-');
     line = line.replace(/BYN/gi, '').trim();
@@ -66,7 +75,29 @@ function generateCSV() {
   document.getElementById('output').textContent = csv;
 }
 
-document.getElementById('btn').onclick = generateCSV;
+// --------------------
+// Скачать CSV
+// --------------------
+function downloadCSV() {
+  const text = document.getElementById('output').textContent;
+  if (!text.trim()) return;
+
+  const blob = new Blob([text], { type: 'text/csv' });
+  const url = URL.createObjectURL(blob);
+
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = "products.csv";
+  a.click();
+
+  URL.revokeObjectURL(url);
+}
+
+// --------------------
+// Привязка кнопок
+// --------------------
+document.getElementById('btn-generate').onclick = generateCSV;
+document.getElementById('btn-download').onclick = downloadCSV;
 </script>
 
 </body>
