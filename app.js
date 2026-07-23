@@ -3,7 +3,7 @@ let lastUpdateText = '';
 
 // Загрузка CSV + чтение времени из первой строки
 async function loadProducts() {
-  const response = await fetch('products.csv?' + Date.now()); // защита от кэша
+  const response = await fetch('products.csv?' + Date.now());
   const text = await response.text();
 
   const lines = text.split('\n').filter(l => l.trim());
@@ -18,7 +18,7 @@ async function loadProducts() {
     lastUpdateText = 'неизвестно';
   }
 
-  // вторая строка — заголовок: id,model,price
+  // вторая строка — заголовок
   const dataLines = lines.slice(2);
 
   const products = [];
@@ -58,7 +58,7 @@ function renderProducts(list) {
 // Индикатор времени последнего изменения прайса
 function updateTimestamp() {
   const el = document.getElementById('update-time');
-  el.textContent = `Прайс обновлен: ${lastUpdateText}`;
+  el.textContent = `Последнее изменение прайса: ${lastUpdateText}`;
 }
 
 // Поиск
