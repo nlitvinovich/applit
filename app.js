@@ -1,7 +1,7 @@
 let products = [];
 let cart = JSON.parse(localStorage.getItem('cart') || '[]');
 
-/* Обновление badge */
+/* Badge */
 function updateCartCount() {
   const tabCart = document.getElementById('tab-cart');
 
