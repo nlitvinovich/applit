@@ -103,6 +103,25 @@ document.getElementById('cart-close').addEventListener('click', () => {
   document.getElementById('cart-modal').style.display = 'none';
 });
 
+/* Кнопка заказа — вариант B (отправка по нику) */
+document.getElementById('cart-order-btn').addEventListener('click', () => {
+  if (cart.length === 0) {
+    alert("Корзина пуста");
+    return;
+  }
+
+  const total = cart.reduce((sum, item) => sum + Number(item.price), 0);
+
+  const text =
+    "🛒 Заказ:\n\n" +
+    cart.map(i => `• ${i.model} — ${i.price} BYN`).join("\n") +
+    `\n\nИтого: ${total} BYN`;
+
+  const encoded = encodeURIComponent(text);
+
+  window.location.href = `https://t.me/ilitvinovich?text=${encoded}`;
+});
+
 /* Анимация таббара */
 let lastScroll = 0;
 window.addEventListener('scroll', () => {
