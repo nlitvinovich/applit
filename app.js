@@ -1,12 +1,18 @@
 let products = [];
 let cart = JSON.parse(localStorage.getItem('cart') || '[]');
 
-/* Обновление счётчика корзины */
+/* Обновление badge */
 function updateCartCount() {
   const tabCart = document.getElementById('tab-cart');
-  if (tabCart) {
-    tabCart.textContent = `Корзина (${cart.length})`;
+
+  let badge = tabCart.querySelector('.tab-badge');
+  if (!badge) {
+    badge = document.createElement('div');
+    badge.className = 'tab-badge';
+    tabCart.appendChild(badge);
   }
+
+  badge.textContent = cart.length;
 }
 updateCartCount();
 
@@ -16,14 +22,11 @@ fetch('products.csv?' + Date.now())
   .then(text => {
     const lines = text.trim().split('\n');
 
-    // 1-я строка: last_update,23.07.2026 20:47
     const first = lines[0].split(',');
     const lastUpdate = first[1]?.trim();
 
-    // 2-я строка — заголовки: id,model,price
     const headers = lines[1].split(',');
 
-    // товары начинаются с 3-й строки
     products = lines.slice(2).map(line => {
       const cols = line.split(',');
       const obj = {};
@@ -33,24 +36,16 @@ fetch('products.csv?' + Date.now())
 
     renderCatalog(products);
     updateTime(lastUpdate);
-  })
-  .catch(err => console.error(err));
+  });
 
-/* Обновление времени */
 function updateTime(lastUpdate) {
   const el = document.getElementById('update-time');
-  if (!el) return;
-
-  el.textContent = lastUpdate
-    ? `Обновлено: ${lastUpdate}`
-    : `Обновлено: ${new Date().toLocaleString('ru-RU')}`;
+  el.textContent = `Обновлено: ${lastUpdate}`;
 }
 
 /* Рендер каталога */
 function renderCatalog(data) {
   const catalog = document.getElementById('catalog');
-  if (!catalog) return;
-
   catalog.innerHTML = '';
 
   data.forEach(item => {
@@ -74,53 +69,50 @@ function renderCatalog(data) {
 }
 
 /* Поиск */
-const searchInput = document.getElementById('search');
-if (searchInput) {
-  searchInput.addEventListener('input', e => {
-    const q = e.target.value.toLowerCase();
-    const filtered = products.filter(p =>
-      (p.model || '').toLowerCase().includes(q)
-    );
-    renderCatalog(filtered);
-  });
-}
+document.getElementById('search').addEventListener('input', e => {
+  const q = e.target.value.toLowerCase();
+  const filtered = products.filter(p =>
+    (p.model || '').toLowerCase().includes(q)
+  );
+  renderCatalog(filtered);
+});
 
 /* Открытие корзины */
 document.getElementById('tab-cart').addEventListener('click', () => {
   const modal = document.getElementById('cart-modal');
   const items = document.getElementById('cart-items');
 
-  items.innerHTML = cart.map(i => `
+  items.innerHTML = cart.map((i, index) => `
     <div class="cart-item">
-      <strong>${i.model}</strong> — ${i.price} BYN
+      <span>${i.model} — ${i.price} BYN</span>
+      <button class="cart-remove" data-index="${index}">×</button>
     </div>
   `).join('');
 
-  modal.style.display = 'flex';
+  const total = cart.reduce((sum, item) => sum + Number(item.price), 0);
+  document.getElementById('cart-total').textContent = `Итого: ${total} BYN`;
 
-  document.getElementById('tab-cart').classList.add('active');
-  document.getElementById('tab-catalog').classList.remove('active');
+  modal.style.display = 'flex';
+});
+
+/* Удаление товара */
+document.addEventListener('click', e => {
+  if (e.target.classList.contains('cart-remove')) {
+    const index = Number(e.target.dataset.index);
+    cart.splice(index, 1);
+    localStorage.setItem('cart', JSON.stringify(cart));
+    updateCartCount();
+    document.getElementById('tab-cart').click();
+  }
 });
 
 /* Закрытие корзины */
 document.getElementById('cart-close').addEventListener('click', () => {
   document.getElementById('cart-modal').style.display = 'none';
-
-  document.getElementById('tab-catalog').classList.add('active');
-  document.getElementById('tab-cart').classList.remove('active');
 });
 
-/* Переключение на каталог */
-document.getElementById('tab-catalog').addEventListener('click', () => {
-  document.getElementById('cart-modal').style.display = 'none';
-
-  document.getElementById('tab-catalog').classList.add('active');
-  document.getElementById('tab-cart').classList.remove('active');
-});
-
-/* Анимация поднятия таббара при скролле */
+/* Анимация таббара */
 let lastScroll = 0;
-
 window.addEventListener('scroll', () => {
   const tabbar = document.querySelector('.tabbar');
   const currentScroll = window.scrollY;
