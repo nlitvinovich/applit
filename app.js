@@ -1,9 +1,15 @@
-// Загрузка CSV
+let allProducts = [];
+
+// Загрузка CSV + получение времени последнего изменения
 async function loadProducts() {
   const response = await fetch('products.csv?' + Date.now()); // защита от кэша
-  const text = await response.text();
+  const lastModified = response.headers.get('Last-Modified');
 
-  const lines = text.split('\n').slice(1); // пропускаем заголовок
+  updateTimestamp(lastModified);
+
+  const text = await response.text();
+  const lines = text.split('\n').slice(1);
+
   const products = [];
 
   for (const line of lines) {
@@ -38,22 +44,47 @@ function renderProducts(list) {
   });
 }
 
-// Обновление индикатора времени
-function updateTimestamp() {
+// Индикатор времени последнего изменения CSV (дата + время)
+function updateTimestamp(lastModified) {
   const el = document.getElementById('update-time');
-  const now = new Date();
 
-  const hh = String(now.getHours()).padStart(2, '0');
-  const mm = String(now.getMinutes()).padStart(2, '0');
+  if (!lastModified) {
+    el.textContent = 'Последнее изменение прайса: неизвестно';
+    return;
+  }
 
-  el.textContent = `Обновлено: ${hh}:${mm}`;
+  const date = new Date(lastModified);
+
+  const dd = String(date.getDate()).padStart(2, '0');
+  const mm = String(date.getMonth() + 1).padStart(2, '0');
+  const yyyy = date.getFullYear();
+
+  const hh = String(date.getHours()).padStart(2, '0');
+  const min = String(date.getMinutes()).padStart(2, '0');
+
+  el.textContent = `Последнее изменение прайса: ${dd}.${mm}.${yyyy} ${hh}:${min}`;
+}
+
+// Поиск
+function setupSearch() {
+  const input = document.getElementById('search');
+
+  input.addEventListener('input', () => {
+    const q = input.value.toLowerCase();
+
+    const filtered = allProducts.filter(p =>
+      p.model.toLowerCase().includes(q)
+    );
+
+    renderProducts(filtered);
+  });
 }
 
 // Основной запуск
 async function initCatalog() {
-  const products = await loadProducts();
-  renderProducts(products);
-  updateTimestamp();
+  allProducts = await loadProducts();
+  renderProducts(allProducts);
+  setupSearch();
 }
 
 // Автообновление каждые 10 минут
