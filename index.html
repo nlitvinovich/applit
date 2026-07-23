@@ -1,58 +1,25 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<title>NLAppleLab Catalog</title>
-<link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8">
+  <title>NLAppleLab Catalog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<style>
-body {
-  font-family: Arial, sans-serif;
-  background: #f5f5f5;
-  margin: 0;
-  padding: 20px;
-}
+  <!-- Иконка ярлыка iPhone -->
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
-#update-time {
-  margin-bottom: 15px;
-  font-size: 14px;
-  color: #555;
-}
-
-#catalog {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 15px;
-}
-
-.card {
-  background: white;
-  padding: 15px;
-  border-radius: 10px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-}
-
-.card-title {
-  font-size: 16px;
-  font-weight: bold;
-  margin-bottom: 8px;
-}
-
-.card-price {
-  font-size: 15px;
-  color: #0071e3;
-}
-</style>
+  <!-- Подключение нового премиального дизайна -->
+  <link rel="stylesheet" href="style.css?v=4">
 </head>
 
 <body>
 
-<div id="update-time"></div>
+  <input id="search" type="text" placeholder="Поиск по моделям…">
 
-<div id="catalog"></div>
+  <div id="update-time"></div>
 
-<script src="app.js"></script>
+  <div id="catalog"></div>
 
+  <script src="app.js"></script>
 </body>
 </html>
