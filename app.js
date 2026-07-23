@@ -4,14 +4,7 @@ let cart = JSON.parse(localStorage.getItem('cart') || '[]');
 /* Badge */
 function updateCartCount() {
   const tabCart = document.getElementById('tab-cart');
-
-  let badge = tabCart.querySelector('.tab-badge');
-  if (!badge) {
-    badge = document.createElement('div');
-    badge.className = 'tab-badge';
-    tabCart.appendChild(badge);
-  }
-
+  const badge = tabCart.querySelector('.tab-badge');
   badge.textContent = cart.length;
 }
 updateCartCount();
@@ -39,8 +32,7 @@ fetch('products.csv?' + Date.now())
   });
 
 function updateTime(lastUpdate) {
-  const el = document.getElementById('update-time');
-  el.textContent = `Обновлено: ${lastUpdate}`;
+  document.getElementById('update-time').textContent = `Обновлено: ${lastUpdate}`;
 }
 
 /* Рендер каталога */
