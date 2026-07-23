@@ -62,7 +62,7 @@ function updateTimestamp(lastModified) {
   const hh = String(date.getHours()).padStart(2, '0');
   const min = String(date.getMinutes()).padStart(2, '0');
 
-  el.textContent = `Последнее изменение прайса: ${dd}.${mm}.${yyyy} ${hh}:${min}`;
+  el.textContent = `Прайс обновлен: ${dd}.${mm}.${yyyy} ${hh}:${min}`;
 }
 
 // Поиск
