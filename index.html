@@ -5,21 +5,35 @@
   <title>NLAppleLab Catalog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- Иконка ярлыка iPhone -->
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-
-  <!-- Подключение нового премиального дизайна -->
-  <link rel="stylesheet" href="style.css?v=4">
+  <link rel="stylesheet" href="style.css?v=10">
 </head>
 
 <body>
 
-  <input id="search" type="text" placeholder="Поиск по моделям…">
+  <div class="search-bar-wrapper">
+    <input id="search" type="text" placeholder="Поиск по моделям…">
+  </div>
 
   <div id="update-time"></div>
 
   <div id="catalog"></div>
 
-  <script src="app.js"></script>
+  <!-- Модальное окно корзины -->
+  <div id="cart-modal" class="cart-modal">
+    <div class="cart-content">
+      <h2>Корзина</h2>
+      <div id="cart-items"></div>
+      <button id="cart-close">Закрыть</button>
+    </div>
+  </div>
+
+  <!-- Нижний таббар -->
+  <div class="tabbar">
+    <div class="tab-item active" id="tab-catalog">Каталог</div>
+    <div class="tab-item" id="tab-cart">Корзина</div>
+  </div>
+
+  <script src="app.js?v=10"></script>
 </body>
 </html>
