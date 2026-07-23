@@ -14,7 +14,7 @@ body {
 
 textarea {
   width: 100%;
-  height: 200px;
+  height: 300px;
   padding: 10px;
   font-size: 16px;
   border-radius: 8px;
@@ -51,8 +51,7 @@ button:hover {
 
 <h2>Генератор CSV для NLAppleLab</h2>
 
-<textarea id="input" placeholder="Вставь сюда строки вида:
-17 pro 256 orange esim - 3222 BYN"></textarea>
+<textarea id="input" placeholder="Вставь сюда весь Telegram-пост (даже HTML)"></textarea>
 
 <button onclick="generateCSV()">Сгенерировать CSV</button>
 
@@ -60,9 +59,22 @@ button:hover {
 
 <script>
 function generateCSV() {
-  const raw = document.getElementById('input').value.trim().split('\n');
+  let raw = document.getElementById('input').value;
 
-  // создаём авто‑таймстамп
+  // 1) Удаляем HTML-теги
+  raw = raw.replace(/<[^>]+>/g, ' ');
+
+  // 2) Удаляем эмодзи
+  raw = raw.replace(/[\u{1F300}-\u{1FAFF}]/gu, '');
+
+  // 3) Удаляем лишние символы Telegram
+  raw = raw.replace(/edited|Views|Telegram|instagram|Наш Сайт/gi, '');
+  raw = raw.replace(/\s+/g, ' ');
+
+  // 4) Разбиваем на строки
+  const lines = raw.split(/[\n\r]+/).map(l => l.trim());
+
+  // авто‑таймстамп
   const now = new Date();
   const dd = String(now.getDate()).padStart(2, '0');
   const mm = String(now.getMonth() + 1).padStart(2, '0');
@@ -77,17 +89,28 @@ function generateCSV() {
 
   let id = 1;
 
-  raw.forEach(line => {
-    if (!line.trim()) return;
+  lines.forEach(line => {
+    if (!line) return;
 
-    // пример строки:
-    // 17 pro 256 orange esim - 3222 BYN
+    // ищем строки с ценой
+    if (!line.match(/\d+\s*BYN/i)) return;
+
+    // заменяем длинные дефисы
+    line = line.replace(/—/g, '-').replace(/–/g, '-');
+
+    // убираем BYN
+    line = line.replace(/BYN/gi, '').trim();
+
+    // парсим модель и цену
     const parts = line.split('-');
+    if (parts.length < 2) return;
+
     const model = parts[0].trim();
-    const priceRaw = parts[1].replace('BYN', '').trim();
+    let price = parseInt(parts[1].trim(), 10);
+
+    if (isNaN(price)) return;
 
     // округление до десятков
-    let price = parseInt(priceRaw, 10);
     price = Math.round(price / 10) * 10;
 
     csv += `${id},${model},${price}\n`;
