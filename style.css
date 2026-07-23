@@ -90,13 +90,12 @@ body {
   color: #fff;
 }
 
-/* ❗ Исправление бага iPhone — кнопка НЕ заливается */
+/* Исправление бага iPhone */
 .add-to-cart:active {
   background: transparent !important;
   color: #111 !important;
 }
 
-/* Отключаем hover на тач-экранах */
 @media (hover: none) {
   .add-to-cart:hover {
     background: transparent;
@@ -135,7 +134,7 @@ body {
   position: relative;
 }
 
-/* Кнопка закрытия корзины */
+/* Кнопка закрытия */
 .cart-close-btn {
   position: absolute;
   top: 12px;
@@ -172,6 +171,24 @@ body {
   font-weight: 600;
   margin-top: 20px;
   text-align: right;
+}
+
+/* Кнопка заказа */
+.cart-order-btn {
+  margin-top: 20px;
+  width: 100%;
+  padding: 14px;
+  font-size: 17px;
+  background: #0071e3;
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: opacity .2s;
+}
+
+.cart-order-btn:active {
+  opacity: 0.7;
 }
 
 /* Таббар */
