@@ -1,13 +1,13 @@
 let products = [];
 let cart = JSON.parse(localStorage.getItem('cart') || '[]');
 
+/* Обновление счётчика корзины в таббаре */
 function updateCartCount() {
   const tabCart = document.getElementById('tab-cart');
   if (tabCart) {
     tabCart.textContent = `Корзина (${cart.length})`;
   }
 }
-
 updateCartCount();
 
 /* Загрузка CSV */
@@ -15,25 +15,35 @@ fetch('products.csv?' + Date.now())
   .then(res => res.text())
   .then(text => {
     const lines = text.trim().split('\n');
-    const headers = lines[0].split(',');
 
-    products = lines.slice(1).map(line => {
+    // 1-я строка: last_update,23.07.2026 20:47
+    const first = lines[0].split(',');
+    const lastUpdate = first[1]?.trim();
+
+    // 2-я строка — заголовки: id,model,price
+    const headers = lines[1].split(',');
+
+    // товары начинаются с 3-й строки
+    products = lines.slice(2).map(line => {
       const cols = line.split(',');
       const obj = {};
-      headers.forEach((h, i) => obj[h.trim()] = cols[i].trim());
+      headers.forEach((h, i) => obj[h.trim()] = cols[i]?.trim());
       return obj;
     });
 
     renderCatalog(products);
-    updateTime();
+    updateTime(lastUpdate);
   })
   .catch(err => console.error(err));
 
-function updateTime() {
+/* Обновление времени */
+function updateTime(lastUpdate) {
   const el = document.getElementById('update-time');
   if (!el) return;
-  const now = new Date();
-  el.textContent = `Обновлено: ${now.toLocaleString('ru-RU')}`;
+
+  el.textContent = lastUpdate
+    ? `Обновлено: ${lastUpdate}`
+    : `Обновлено: ${new Date().toLocaleString('ru-RU')}`;
 }
 
 /* Рендер каталога */
@@ -75,7 +85,7 @@ if (searchInput) {
   });
 }
 
-/* Открытие корзины по табу */
+/* Открытие корзины */
 document.getElementById('tab-cart').addEventListener('click', () => {
   const modal = document.getElementById('cart-modal');
   const items = document.getElementById('cart-items');
