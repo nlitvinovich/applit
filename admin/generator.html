@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -14,7 +13,7 @@
 <br><br>
 
 <button id="btn-generate">Сгенерировать CSV</button>
-<button id="btn-download">Скачать CSV</button>
+<button id="btn-copy">Скопировать CSV</button>
 
 <pre id="output" style="white-space:pre;margin-top:20px;background:#eee;padding:10px;"></pre>
 
@@ -76,28 +75,22 @@ function generateCSV() {
 }
 
 // --------------------
-// Скачать CSV
+// Скопировать CSV в буфер
 // --------------------
-function downloadCSV() {
+function copyCSV() {
   const text = document.getElementById('output').textContent;
   if (!text.trim()) return;
 
-  const blob = new Blob([text], { type: 'text/csv' });
-  const url = URL.createObjectURL(blob);
-
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = "products.csv";
-  a.click();
-
-  URL.revokeObjectURL(url);
+  navigator.clipboard.writeText(text).then(() => {
+    alert("CSV скопирован в буфер обмена!");
+  });
 }
 
 // --------------------
 // Привязка кнопок
 // --------------------
 document.getElementById('btn-generate').onclick = generateCSV;
-document.getElementById('btn-download').onclick = downloadCSV;
+document.getElementById('btn-copy').onclick = copyCSV;
 </script>
 
 </body>
