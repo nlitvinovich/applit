@@ -119,7 +119,7 @@ document.getElementById('cart-order-btn').addEventListener('click', () => {
 
   const encoded = encodeURIComponent(text);
 
-  window.location.href = `https://t.me/YOUR_TELEGRAM_USERNAME?text=${encoded}`;
+  window.location.href = `https://t.me/ilitvinovich?text=${encoded}`;
 });
 
 /* Кнопка поделиться каталогом — нативное окно */
@@ -127,7 +127,7 @@ document.getElementById('share-catalog-btn').addEventListener('click', async () 
   const shareData = {
     title: "Каталог appLit",
     text: "Привет! Вот каталог appLit:",
-    url: "https://YOUR_SITE_URL"
+    url: "https://applit-zeta.vercel.app/"
   };
 
   if (navigator.share) {
