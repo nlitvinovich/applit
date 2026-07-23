@@ -103,7 +103,7 @@ document.getElementById('cart-close').addEventListener('click', () => {
   document.getElementById('cart-modal').style.display = 'none';
 });
 
-/* Кнопка заказа — вариант B (отправка по нику) */
+/* Кнопка заказать — отправка по нику */
 document.getElementById('cart-order-btn').addEventListener('click', () => {
   if (cart.length === 0) {
     alert("Корзина пуста");
@@ -113,13 +113,35 @@ document.getElementById('cart-order-btn').addEventListener('click', () => {
   const total = cart.reduce((sum, item) => sum + Number(item.price), 0);
 
   const text =
-    "🛒 Заказ:\n\n" +
+    "🛒 Заказ appLit:\n\n" +
     cart.map(i => `• ${i.model} — ${i.price} BYN`).join("\n") +
     `\n\nИтого: ${total} BYN`;
 
   const encoded = encodeURIComponent(text);
 
-  window.location.href = `https://t.me/ilitvinovich?text=${encoded}`;
+  window.location.href = `https://t.me/YOUR_TELEGRAM_USERNAME?text=${encoded}`;
+});
+
+/* Кнопка поделиться каталогом — нативное окно */
+document.getElementById('share-catalog-btn').addEventListener('click', async () => {
+  const shareData = {
+    title: "Каталог appLit",
+    text: "Привет! Вот каталог appLit:",
+    url: "https://YOUR_SITE_URL"
+  };
+
+  if (navigator.share) {
+    try {
+      await navigator.share(shareData);
+    } catch (err) {
+      alert("Не удалось открыть окно поделиться");
+    }
+  } else {
+    window.location.href =
+      `https://t.me/ilitvinovich?text=${encodeURIComponent(
+        "Привет! Вот каталог appLit:\nhttps://applit-zeta.vercel.app/"
+      )}`;
+  }
 });
 
 /* Анимация таббара */
