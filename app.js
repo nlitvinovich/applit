@@ -1,7 +1,7 @@
 let products = [];
 let cart = JSON.parse(localStorage.getItem('cart') || '[]');
 
-/* Обновление счётчика корзины в таббаре */
+/* Обновление счётчика корзины */
 function updateCartCount() {
   const tabCart = document.getElementById('tab-cart');
   if (tabCart) {
@@ -116,4 +116,20 @@ document.getElementById('tab-catalog').addEventListener('click', () => {
 
   document.getElementById('tab-catalog').classList.add('active');
   document.getElementById('tab-cart').classList.remove('active');
+});
+
+/* Анимация поднятия таббара при скролле */
+let lastScroll = 0;
+
+window.addEventListener('scroll', () => {
+  const tabbar = document.querySelector('.tabbar');
+  const currentScroll = window.scrollY;
+
+  if (currentScroll > lastScroll + 10) {
+    tabbar.classList.add('lifted');
+  } else if (currentScroll < lastScroll - 10) {
+    tabbar.classList.remove('lifted');
+  }
+
+  lastScroll = currentScroll;
 });
