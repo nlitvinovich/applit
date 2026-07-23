@@ -10,7 +10,7 @@ async function loadProducts() {
 
   if (lines.length < 2) return [];
 
-  // первая строка: last_update,23.07.2026 14:27
+  // первая строка: last_update,23.07.2026 20:28
   const [label, value] = lines[0].split(',');
   if (label && value && label.trim().toLowerCase() === 'last_update') {
     lastUpdateText = value.trim();
