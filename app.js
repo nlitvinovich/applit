@@ -1,135 +1,64 @@
-let allProducts = [];
-let lastUpdateText = '';
+let cart = JSON.parse(localStorage.getItem('cart') || '[]');
 
-//
-// Авто‑создание строки поиска, если её нет в HTML
-//
-function ensureSearchField() {
-  if (!document.getElementById('search')) {
-    const input = document.createElement('input');
-    input.id = 'search';
-    input.type = 'text';
-    input.placeholder = 'Поиск по моделям…';
-    input.style = 'width:100%;padding:12px;font-size:16px;border-radius:8px;border:1px solid #ccc;margin-bottom:20px;';
-    document.body.prepend(input);
-  }
-
-  if (!document.getElementById('update-time')) {
-    const upd = document.createElement('div');
-    upd.id = 'update-time';
-    upd.style = 'margin-bottom:20px;color:#555;font-size:14px;';
-    document.body.insertBefore(upd, document.getElementById('search').nextSibling);
-  }
-
-  if (!document.getElementById('catalog')) {
-    const cat = document.createElement('div');
-    cat.id = 'catalog';
-    document.body.appendChild(cat);
-  }
+function updateCartCount() {
+  document.getElementById('tab-cart').textContent = `Корзина (${cart.length})`;
 }
+updateCartCount();
 
-//
-// Загрузка CSV + чтение времени из первой строки
-//
-async function loadProducts() {
-  const response = await fetch('products.csv?' + Date.now());
-  const text = await response.text();
+/* Рендер каталога */
+function renderCatalog(data) {
+  const catalog = document.getElementById('catalog');
+  catalog.innerHTML = '';
 
-  const lines = text.split('\n').filter(l => l.trim());
-
-  if (lines.length < 2) return [];
-
-  // первая строка: last_update,23.07.2026 20:28
-  const [label, value] = lines[0].split(',');
-  if (label && value && label.trim().toLowerCase() === 'last_update') {
-    lastUpdateText = value.trim();
-  } else {
-    lastUpdateText = 'неизвестно';
-  }
-
-  // вторая строка — заголовок
-  const dataLines = lines.slice(2);
-
-  const products = [];
-
-  for (const line of dataLines) {
-    if (!line.trim()) continue;
-    const [id, model, price] = line.split(',');
-
-    products.push({
-      id: Number(id),
-      model: model.trim(),
-      price: Number(price)
-    });
-  }
-
-  return products;
-}
-
-//
-// Рендер каталога
-//
-function renderProducts(list) {
-  const container = document.getElementById('catalog');
-  container.innerHTML = '';
-
-  list.forEach(p => {
+  data.forEach(item => {
     const card = document.createElement('div');
     card.className = 'card';
 
     card.innerHTML = `
-      <div class="card-title">${p.model}</div>
-      <div class="card-price">${p.price} BYN</div>
+      <div class="card-title">${item.model}</div>
+      <button class="add-to-cart">🛒</button>
+      <div class="card-price">${item.price} BYN</div>
     `;
 
-    container.appendChild(card);
+    card.querySelector('.add-to-cart').addEventListener('click', () => {
+      cart.push(item);
+      localStorage.setItem('cart', JSON.stringify(cart));
+      updateCartCount();
+    });
+
+    catalog.appendChild(card);
   });
 }
 
-//
-// Индикатор времени последнего изменения прайса
-//
-function updateTimestamp() {
-  const el = document.getElementById('update-time');
-  el.textContent = `Последнее изменение прайса: ${lastUpdateText}`;
-}
+/* Открытие корзины */
+document.getElementById('tab-cart').addEventListener('click', () => {
+  const modal = document.getElementById('cart-modal');
+  const items = document.getElementById('cart-items');
 
-//
-// Поиск
-//
-function setupSearch() {
-  const input = document.getElementById('search');
+  items.innerHTML = cart.map(i => `
+    <div class="cart-item">
+      <strong>${i.model}</strong> — ${i.price} BYN
+    </div>
+  `).join('');
 
-  input.addEventListener('input', () => {
-    const q = input.value.toLowerCase();
+  modal.style.display = 'flex';
 
-    const filtered = allProducts.filter(p =>
-      p.model.toLowerCase().includes(q)
-    );
+  document.getElementById('tab-cart').classList.add('active');
+  document.getElementById('tab-catalog').classList.remove('active');
+});
 
-    renderProducts(filtered);
-  });
-}
+/* Закрытие корзины */
+document.getElementById('cart-close').addEventListener('click', () => {
+  document.getElementById('cart-modal').style.display = 'none';
 
-//
-// Основной запуск
-//
-async function initCatalog() {
-  ensureSearchField();     // ← поиск создаётся автоматически
-  allProducts = await loadProducts();
-  renderProducts(allProducts);
-  updateTimestamp();
-  setupSearch();
-}
+  document.getElementById('tab-catalog').classList.add('active');
+  document.getElementById('tab-cart').classList.remove('active');
+});
 
-//
-// Автообновление каждые 10 минут
-//
-setInterval(() => {
-  location.reload();
-}, 10 * 60 * 1000);
+/* Переключение на каталог */
+document.getElementById('tab-catalog').addEventListener('click', () => {
+  document.getElementById('cart-modal').style.display = 'none';
 
-//
-// Запуск
-//
-initCatalog();
+  document.getElementById('tab-catalog').classList.add('active');
+  document.getElementById('tab-cart').classList.remove('active');
+});
