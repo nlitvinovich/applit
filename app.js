@@ -113,21 +113,23 @@ document.getElementById('cart-order-btn').addEventListener('click', () => {
   const total = cart.reduce((sum, item) => sum + Number(item.price), 0);
 
   const text =
-    "🛒 Заказ appLit:\n\n" +
+    "🛒 Заказ appLit:\n" +
     cart.map(i => `• ${i.model} — ${i.price} BYN`).join("\n") +
-    `\n\nИтого: ${total} BYN`;
+    `\nИтого: ${total} BYN`;
 
-  const encoded = encodeURIComponent(text);
+  const encoded = encodeURIComponent(text).replace(/%0A/g, "%0A");
 
   window.location.href = `https://t.me/ilitvinovich?text=${encoded}`;
 });
 
 /* Кнопка поделиться каталогом — нативное окно */
 document.getElementById('share-catalog-btn').addEventListener('click', async () => {
+  const shareText =
+    "Привет! Вот каталог appLit:\nhttps://applit-zeta.vercel.app/";
+
   const shareData = {
     title: "Каталог appLit",
-    text: "Привет! Вот каталог appLit:",
-    url: "https://applit-zeta.vercel.app/"
+    text: shareText
   };
 
   if (navigator.share) {
@@ -138,9 +140,7 @@ document.getElementById('share-catalog-btn').addEventListener('click', async () 
     }
   } else {
     window.location.href =
-      `https://t.me/ilitvinovich?text=${encodeURIComponent(
-        "Привет! Вот каталог appLit:\nhttps://applit-zeta.vercel.app/"
-      )}`;
+      `https://t.me/ilitvinovich?text=${encodeURIComponent(shareText)}`;
   }
 });
 
