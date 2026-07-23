@@ -63,7 +63,7 @@ body {
   margin-bottom: 8px;
 }
 
-/* Кнопка корзины */
+/* Кнопка корзины — чёрная */
 .add-to-cart {
   position: absolute;
   right: 20px;
@@ -78,9 +78,24 @@ body {
   transition: background .2s, color .2s;
 }
 
+/* Hover для десктопа */
 .add-to-cart:hover {
   background: #111;
   color: #fff;
+}
+
+/* ❗ Исправление бага iPhone — кнопка НЕ заливается */
+.add-to-cart:active {
+  background: transparent !important;
+  color: #111 !important;
+}
+
+/* Отключаем hover на тач-экранах */
+@media (hover: none) {
+  .add-to-cart:hover {
+    background: transparent;
+    color: #111;
+  }
 }
 
 /* Цена */
@@ -114,7 +129,7 @@ body {
   position: relative;
 }
 
-/* Кнопка закрытия */
+/* Кнопка закрытия корзины */
 .cart-close-btn {
   position: absolute;
   top: 12px;
