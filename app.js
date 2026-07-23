@@ -1,18 +1,29 @@
 let allProducts = [];
+let lastUpdateText = '';
 
-// Загрузка CSV + получение времени последнего изменения
+// Загрузка CSV + чтение времени из первой строки
 async function loadProducts() {
   const response = await fetch('products.csv?' + Date.now()); // защита от кэша
-  const lastModified = response.headers.get('Last-Modified');
-
-  updateTimestamp(lastModified);
-
   const text = await response.text();
-  const lines = text.split('\n').slice(1);
+
+  const lines = text.split('\n').filter(l => l.trim());
+
+  if (lines.length < 2) return [];
+
+  // первая строка: last_update,23.07.2026 14:27
+  const [label, value] = lines[0].split(',');
+  if (label && value && label.trim().toLowerCase() === 'last_update') {
+    lastUpdateText = value.trim();
+  } else {
+    lastUpdateText = 'неизвестно';
+  }
+
+  // вторая строка — заголовок: id,model,price
+  const dataLines = lines.slice(2);
 
   const products = [];
 
-  for (const line of lines) {
+  for (const line of dataLines) {
     if (!line.trim()) continue;
     const [id, model, price] = line.split(',');
 
@@ -44,25 +55,10 @@ function renderProducts(list) {
   });
 }
 
-// Индикатор времени последнего изменения CSV (дата + время)
-function updateTimestamp(lastModified) {
+// Индикатор времени последнего изменения прайса
+function updateTimestamp() {
   const el = document.getElementById('update-time');
-
-  if (!lastModified) {
-    el.textContent = 'Последнее изменение прайса: неизвестно';
-    return;
-  }
-
-  const date = new Date(lastModified);
-
-  const dd = String(date.getDate()).padStart(2, '0');
-  const mm = String(date.getMonth() + 1).padStart(2, '0');
-  const yyyy = date.getFullYear();
-
-  const hh = String(date.getHours()).padStart(2, '0');
-  const min = String(date.getMinutes()).padStart(2, '0');
-
-  el.textContent = `Прайс обновлен: ${dd}.${mm}.${yyyy} ${hh}:${min}`;
+  el.textContent = `Последнее изменение прайса: ${lastUpdateText}`;
 }
 
 // Поиск
@@ -84,6 +80,7 @@ function setupSearch() {
 async function initCatalog() {
   allProducts = await loadProducts();
   renderProducts(allProducts);
+  updateTimestamp();
   setupSearch();
 }
 
