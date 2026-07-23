@@ -38,6 +38,28 @@ body {
   text-align: center;
 }
 
+/* Кнопка отправить каталог другу */
+.share-wrapper {
+  max-width: 600px;
+  margin: 10px auto 20px auto;
+  text-align: center;
+}
+
+.share-catalog-btn {
+  padding: 10px 16px;
+  font-size: 15px;
+  background: #111;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: opacity .2s;
+}
+
+.share-catalog-btn:active {
+  opacity: 0.7;
+}
+
 /* Каталог — центрируем карточки */
 #catalog {
   max-width: 600px;
