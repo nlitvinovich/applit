@@ -58,7 +58,7 @@ function renderProducts(list) {
 // Индикатор времени последнего изменения прайса
 function updateTimestamp() {
   const el = document.getElementById('update-time');
-  el.textContent = `Последнее изменение прайса: ${lastUpdateText}`;
+  el.textContent = `Прайс обновлен: ${lastUpdateText}`;
 }
 
 // Поиск
