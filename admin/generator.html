@@ -51,7 +51,7 @@ button:hover {
 
 <h2>Генератор CSV для NLAppleLab</h2>
 
-<textarea id="input" placeholder="Вставь сюда HTML Telegram-поста"></textarea>
+<textarea id="input" placeholder="Вставь сюда HTML Telegram-поста (даже из DOCX)"></textarea>
 
 <button onclick="generateCSV()">Сгенерировать CSV</button>
 
@@ -59,65 +59,20 @@ button:hover {
 
 <script>
 function extractText(html) {
-  // 1) Удаляем все теги
-  let text = html.replace(/<[^>]+>/g, '\n');
+  // 1) Вытаскиваем текст между > и <
+  let text = html.replace(/>/g, '\n>').replace(/</g, '<\n');
+  text = text.split('\n').filter(line => {
+    return !line.startsWith('<') && !line.startsWith('>');
+  }).join('\n');
 
   // 2) Удаляем эмодзи
   text = text.replace(/[\u{1F300}-\u{1FAFF}]/gu, '');
 
-  // 3) Убираем двойные переносы
-  text = text.replace(/\n+/g, '\n');
+  // 3) Убираем лишние пробелы
+  text = text.replace(/\s+/g, ' ').replace(/\n+/g, '\n');
 
   return text;
 }
 
 function generateCSV() {
-  const html = document.getElementById('input').value;
-
-  // Вытаскиваем текст
-  const rawText = extractText(html);
-
-  // Разбиваем на строки
-  const lines = rawText.split('\n').map(l => l.trim());
-
-  // авто‑таймстамп
-  const now = new Date();
-  const dd = String(now.getDate()).padStart(2, '0');
-  const mm = String(now.getMonth() + 1).padStart(2, '0');
-  const yyyy = now.getFullYear();
-  const hh = String(now.getHours()).padStart(2, '0');
-  const min = String(now.getMinutes()).padStart(2, '0');
-
-  const timestamp = `last_update,${dd}.${mm}.${yyyy} ${hh}:${min}`;
-
-  let csv = timestamp + "\n";
-  csv += "id,model,price\n";
-
-  let id = 1;
-
-  lines.forEach(line => {
-    if (!line) return;
-
-    // ищем строки с ценой
-    if (!line.match(/\d+\s*BYN/i)) return;
-
-    // заменяем длинные дефисы
-    line = line.replace(/—/g, '-').replace(/–/g, '-');
-
-    // убираем BYN
-    line = line.replace(/BYN/gi, '').trim();
-
-    const parts = line.split('-');
-    if (parts.length < 2) return;
-
-    const model = parts[0].trim();
-    let price = parseInt(parts[1].trim(), 10);
-
-    if (isNaN(price)) return;
-
-    price = Math.round(price / 10) * 10;
-
-    csv += `${id},${model},${price}\n`;
-    id++;
-  });
-
+  const html = document.getElementById('input').value
