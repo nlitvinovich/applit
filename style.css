@@ -63,18 +63,27 @@ body {
   margin-bottom: 8px;
 }
 
-/* Кнопка корзины в карточке */
+/* Кнопка корзины — чёрная, минималистичная */
 .add-to-cart {
   position: absolute;
   right: 20px;
   top: 20px;
+
   padding: 6px 10px;
-  font-size: 14px;
-  background: #0071e3;
-  color: #fff;
-  border: none;
+  font-size: 16px;
+
+  background: transparent;
+  color: #111;
+  border: 1px solid #111;
   border-radius: 10px;
+
   cursor: pointer;
+  transition: background .2s, color .2s;
+}
+
+.add-to-cart:hover {
+  background: #111;
+  color: #fff;
 }
 
 /* Цена */
@@ -107,7 +116,7 @@ body {
   max-width: 400px;
 }
 
-/* Нижний таббар — поднятый и с сероватой заливкой */
+/* Нижний таббар — поднятый, сероватый, с blur */
 .tabbar {
   position: fixed;
   bottom: 20px;
