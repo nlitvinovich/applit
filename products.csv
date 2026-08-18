@@ -1,183 +1,184 @@
-last_update,17.08.2026 09:04
+last_update,18.08.2026 09:31
 id,model,price
-1,17 pro 256 orange esim,3490
-2,17 pro 256 blue esim,3580
-3,17 Pro 256 Silver eSim,3600
-4,17 pro 256 orange sim+esim,3630
-5,17 pro 256 blue sim+esim,3720
-6,17 pro 256 silver sim+esim,3720
-7,17 pro 512 orange esim,4080
-8,17 pro 512 blue esim,4140
-9,17 pro 512 silver  esim,4140
-10,17 pro 512 orange sim+esim,4270
-11,17 pro 512 blue sim+esim,4330
-12,17 pro 512 silver sim+esim,4360
-13,17 pro 1TB orange esim,4620
-14,17 pro 1TB blue esim,4680
-15,17 pro 1TB silver eSIM,4820
-16,17 pro 1TB orange sim+sim,4910
-17,17 pro 1TB blue sim+esim,5100
-18,17 pro 1TB silver sim+sim,5120
-19,17 Pro Max 256 orange esim,3750
-20,17 Pro Max 256 blue esim,3750
-21,17 Pro Max 256 silver esim,3780
-22,17 Pro Max 256 orange sim+Esim,4020
-23,17 Pro Max 256 blue sim+Esim,4030
-24,17 Pro Max 256 silver sim+Esim,4090
-25,17 Pro Max 512 orange esim,4330
-26,17 Pro Max 512 silver esim,4360
-27,17 Pro Max 512 blue esim,4360
-28,17 Pro Max 512 orange sim+Esim,4700
-29,17 Pro Max 512 blue sim+Esim,4740
-30,17 Pro Max 512 silver sim+Esim,4760
-31,17 pro max 1TB orange esim,5010
-32,17 pro max 1TB blue esim,5010
-33,17 pro max 1TB silver esim,5060
-34,17 pro max 1TB orange sim+Esim,5420
-35,17 pro max 1TB blue sim+Esim,5390
-36,17 pro max 1TB silver sim+Esim,5450
-37,Air 256 Black eSim,2710
-38,Air 256 White eSim,2740
-39,Air 256 Gold eSim,2740
+1,17 pro 256 orange esim,3510
+2,17 pro 256 blue esim,3600
+3,17 Pro 256 Silver eSim,3630
+4,17 pro 256 orange sim+esim,3680
+5,17 pro 256 blue sim+esim,3750
+6,17 pro 256 silver sim+esim,3750
+7,17 pro 512 orange esim,4100
+8,17 pro 512 blue esim,4160
+9,17 pro 512 silver  esim,4160
+10,17 pro 512 orange sim+esim,4370
+11,17 pro 512 blue sim+esim,4390
+12,17 pro 512 silver sim+esim,4450
+13,17 pro 1TB orange esim,4690
+14,17 pro 1TB blue esim,4720
+15,17 pro 1TB silver eSIM,4900
+16,17 pro 1TB orange sim+sim,4930
+17,17 pro 1TB blue sim+esim,5080
+18,17 pro 1TB silver sim+sim,5230
+19,17 Pro Max 256 orange esim,3770
+20,17 Pro Max 256 blue esim,3770
+21,17 Pro Max 256 silver esim,3840
+22,17 Pro Max 256 orange sim+Esim,4070
+23,17 Pro Max 256 blue sim+Esim,4070
+24,17 Pro Max 256 silver sim+Esim,4110
+25,17 Pro Max 512 orange esim,4420
+26,17 Pro Max 512 silver esim,4400
+27,17 Pro Max 512 blue esim,4400
+28,17 Pro Max 512 orange sim+Esim,4800
+29,17 Pro Max 512 blue sim+Esim,4780
+30,17 Pro Max 512 silver sim+Esim,4800
+31,17 pro max 1TB orange esim,5080
+32,17 pro max 1TB blue esim,5080
+33,17 pro max 1TB silver esim,5140
+34,17 pro max 1TB orange sim+Esim,5450
+35,17 pro max 1TB blue sim+Esim,5480
+36,17 pro max 1TB silver sim+Esim,5490
+37,Air 256 Black eSim,2750
+38,Air 256 White eSim,2750
+39,Air 256 Gold eSim,2720
 40,Air 256 Blue eSim,2660
-41,Air 512 black,3100
-42,Air 512 gold,2970
-43,Air 512 blue,2950
-44,Air 512 white,3160
-45,17e 256 black Esim,2120
-46,17e 256 white Esim,2110
-47,17e 256 pink Esim,2140
-48,17e 256 Black Sim+eSim,2140
-49,17e 256 White Sim +eSim,2140
-50,17e 256 Pink Sim+eSim,2140
-51,17 256 Black eSim,2720
-52,17 256 White eSim,2720
-53,17 256 Blue eSim,2710
-54,17 256 Sage eSim,2710
-55,17 256 Lavender eSim,2720
-56,17 256 Black Sim+eSim,2770
-57,17 256 White Sim+eSim,2770
-58,17 256 Blue Sim+eSim,2720
-59,17 256 Sage Sim+eSim,2750
-60,17 256 Lavender Sim+eSim,2780
-61,17 512 black Esim,3220
-62,17 512 white Esim,3300
-63,17/512 sage ESIM,3250
-64,17 512 lavander Esim,3370
-65,17 512 blue ESIM,3300
-66,17 512 black Sim+Esim,3370
-67,17 512 blue Sim+Esim,3370
-68,17 512 white Sim+Esim,3390
-69,17 512 sage Sim+Esim,3390
-70,17 512 lavender Sim+Esim,3420
-71,16 pro max 256 desert,3510
-72,16е 128 GB black,1870
-73,16e 128 White,1840
-74,16/128 GB Pink,2330
-75,16/128 GB Black,2300
-76,16/128 GB Teal,2300
-77,16/128 GB Ultramarine,2300
-78,16/256 GB Pink,2570
-79,16/256 GB black,2570
-80,16 Plus 128 White,2500
-81,16 Plus 128 black,2500
-82,16 Plus 128 teal,2530
-83,16 Plus 128 pink,2570
-84,16 Plus 128 ultramarine,2570
-85,15/128 black,2030
-86,15 128 Blue,2000
-87,15/256 black,2300
-88,15 Plus 128GB Pink,2140
-89,14 128GB Red,1760
-90,14 128GB yellow,1760
-91,13/128 GB midnight,1700
-92,iPad 11 128GB WiFi blue,1460
-93,iPad 11 128GB WiFi silver,1490
-94,iPad 11 128GB WiFi pink,1490
-95,iPad 11 128GB WiFi yellow,1480
-96,iPad 11 256GB WiFi blue,1730
-97,iPad 11 256GB WiFi silver,1850
-98,iPad 11 256GB WiFi yellow,1700
-99,iPad 11 256GB WiFi pink,1850
-100,iPad Air 11 (M4) 2026 128 Space Gray,2300
-101,iPad Air 11 (M4) 2026 128 Purple,2300
-102,iPad Air 11 (M4) 2026 128 blue,2210
-103,iPad Air 11 (M4) 2026 128 Starlight,2320
-104,iPad Air 11 (M4) 2026 256 Space Gray,2770
-105,iPad Air 11 (M4) 2026 256 Purple,2690
-106,iPad Air 11 (M4) 2026 256 Blue,2690
-107,iPad Air 11 (M4) 2026 256 Starlight,2780
-108,iPad Air 13 (M4) 2026 128 Space Gray,2710
-109,iPad Air 13 (M4) 2026 128 starlight,2660
-110,iPad Air 13 (M4) 2026 128 Blue,2650
-111,iPad Air 13 (M4) 2026 128 Purple,2650
-112,iPad Pro 11 M5 256 Black,3600
-113,iPad Pro 11 M5 256 Silver,3610
-114,iPad Pro 13 M5 256 Black,4060
-115,iPad Pro 13 M5 256 Silver,4210
-116,MacBook Neo 13 8/256 Blush,2410
-117,MacBook Neo 13 8/256 Indigo,2330
-118,MacBook Neo 13 8/256 Citrus,2380
-119,MacBook Neo 13 8/256 Silver,2390
-120,MacBook Neo 13 8/512 Blush,2720
-121,MacBook Neo 13 8/512 Indigo,2660
-122,MacBook Neo 13 8/512 Citrus,2660
-123,MacBook Neo 13 8/512 Silver,2750
-124,Air 13 M4/16/256 Starlight,3600
-125,Air 13 M4/16/256 Sky Blue,3600
-126,Air 13 M4/16/256 Midnight,3600
-127,Air 13 M4/16/256 silver,3600
-128,Air 13 M5 16/512 Midnight,4200
-129,Air 13 M5 16/512 Silver,4470
-130,Air 13 M5 16/512 sky blue,4150
-131,Air 13 M5 16/512 starlight,4120
-132,Air 13 M5 16/1TB Midnight,4580
-133,Air 13 M5 16/1TB Silver,4710
-134,Air 13 M5 16/1TB sky blue,4520
-135,Air 13 M5 16/1TB starlight,4550
-136,Air 13 M5 24/1TB Midnight,5720
-137,Air 13 M5 24/1TB Silver,5720
-138,Air 13 M5 24/1TB sky blue,5720
-139,Air 13 M5 24/1TB starlight,5690
-140,Air 15 M5 2026 16/512 Midnight,4760
-141,Air 15 M5 2026 16/512 Starlight,4700
-142,Air 15 M5 2026 16/512 sky blue,4790
-143,Air 15 M5 2026 16/512 silver,4970
-144,Air 15 M5 2026 16/1TB Midnight,5570
-145,Air 15 M5 2026 16/1TB Sky Blue,5570
-146,Air 15 M5 2026 16/1TB Silver,5660
-147,Air 15 M5 2026 16/1TB Starlight,5570
-148,SE3 40 Midnight 2025,840
-149,SE3 40 Starlight 2025,870
-150,SE3 44 Midnight 2025,920
-151,SE3 44 Starlight 2025,980
-152,S11 42 Jet Black,1110
-153,S11 42 Space Gray,1110
-154,S11 42 Silver,1140
-155,S11 42 Rose Gold,1130
-156,S11 46 Jet Black,1200
-157,S11 46 Space Gray,1200
-158,S11 46 Silver,1200
-159,S11 46 Rose Gold,1170
-160,AirPods 4,440
-161,AirPods 4 ANC,570
-162,AirPods Pro 3,680
-163,AirPods Pro 2(USB),570
-164,AirPods Max Blue,1550
-165,AirPods Max Purple,1570
-166,AirPods Max Orange,1580
-167,AirPods Max Midnight,1550
-168,AirPods Max starlight,1570
-169,AirPods MAX 2 (2026) Midnight,1640
-170,AirPods MAX 2 (2026) Starlight,1660
-171,AirPods MAX 2 (2026) Blue,1630
-172,AirPods MAX 2 (2026) Purple,1630
-173,AirPods MAX 2 (2026) Orange,1630
-174,Pencil 3gen usbC,330
-175,Pencil Pro,420
-176,Adapter Apple 20W,80
-177,Magic Mouse (white),390
-178,Magic Mouse (grey),420
-179,AirTag 1 Шт,240
-180,AirTag 4 Шт,350
-181,AirTag 4Pac 2Gen,450
+41,Air 512 black,3120
+42,Air 512 gold,2980
+43,Air 512 blue,2970
+44,Air 512 white,3180
+45,17e 256 black Esim,2130
+46,17e 256 white Esim,2120
+47,17e 256 pink Esim,2150
+48,17e 256 Black Sim+eSim,2190
+49,17e 256 White Sim +eSim,2150
+50,17e 256 Pink Sim+eSim,2130
+51,17 256 Black eSim,2750
+52,17 256 White eSim,2800
+53,17 256 Blue eSim,2750
+54,17 256 Sage eSim,2800
+55,17 256 Lavender eSim,2800
+56,17 256 Black Sim+eSim,2780
+57,17 256 White Sim+eSim,2800
+58,17 256 Blue Sim+eSim,2780
+59,17 256 Sage Sim+eSim,2800
+60,17 256 Lavender Sim+eSim,2840
+61,17 512 black Esim,3310
+62,17 512 white Esim,3390
+63,17/512 sage ESIM,3310
+64,17 512 lavander Esim,3400
+65,17 512 blue ESIM,3310
+66,17 512 black Sim+Esim,3390
+67,17 512 blue Sim+Esim,3390
+68,17 512 white Sim+Esim,3420
+69,17 512 sage Sim+Esim,3400
+70,17 512 lavender Sim+Esim,3430
+71,16 pro max 256 desert,3550
+72,16е 128 GB black,1860
+73,16e 128 White,1860
+74,16/128 GB White,2360
+75,16/128 GB Pink,2390
+76,16/128 GB Black,2310
+77,16/128 GB Teal,2340
+78,16/128 GB Ultramarine,2410
+79,16/256 GB Pink,2530
+80,16/256 GB black,2530
+81,16 Plus 128 White,2570
+82,16 Plus 128 black,2570
+83,16 Plus 128 teal,2570
+84,16 Plus 128 pink,2590
+85,16 Plus 128 ultramarine,2590
+86,15/128 black,2060
+87,15 128 Blue,2030
+88,15/256 black,2380
+89,15 Plus 128GB Pink,2150
+90,14 128GB Red,1770
+91,14 128GB yellow,1790
+92,13/128 GB midnight,1710
+93,iPad 11 128GB WiFi blue,1500
+94,iPad 11 128GB WiFi silver,1540
+95,iPad 11 128GB WiFi pink,1560
+96,iPad 11 128GB WiFi yellow,1480
+97,iPad 11 256GB WiFi blue,1770
+98,iPad 11 256GB WiFi silver,1890
+99,iPad 11 256GB WiFi yellow,1760
+100,iPad 11 256GB WiFi pink,1890
+101,iPad Air 11 (M4) 2026 128 Space Gray,2360
+102,iPad Air 11 (M4) 2026 128 Purple,2380
+103,iPad Air 11 (M4) 2026 128 blue,2280
+104,iPad Air 11 (M4) 2026 128 Starlight,2380
+105,iPad Air 11 (M4) 2026 256 Space Gray,2780
+106,iPad Air 11 (M4) 2026 256 Purple,2710
+107,iPad Air 11 (M4) 2026 256 Blue,2710
+108,iPad Air 11 (M4) 2026 256 Starlight,2800
+109,iPad Air 13 (M4) 2026 128 Space Gray,2720
+110,iPad Air 13 (M4) 2026 128 starlight,2680
+111,iPad Air 13 (M4) 2026 128 Blue,2660
+112,iPad Air 13 (M4) 2026 128 Purple,2660
+113,iPad Pro 11 M5 256 Black,3660
+114,iPad Pro 11 M5 256 Silver,3660
+115,iPad Pro 13 M5 256 Black,4080
+116,iPad Pro 13 M5 256 Silver,4240
+117,MacBook Neo 13 8/256 Blush,2420
+118,MacBook Neo 13 8/256 Indigo,2410
+119,MacBook Neo 13 8/256 Citrus,2480
+120,MacBook Neo 13 8/256 Silver,2720
+121,MacBook Neo 13 8/512 Blush,2800
+122,MacBook Neo 13 8/512 Indigo,2770
+123,MacBook Neo 13 8/512 Citrus,2710
+124,MacBook Neo 13 8/512 Silver,2770
+125,Air 13 M4/16/256 Starlight,3620
+126,Air 13 M4/16/256 Sky Blue,3620
+127,Air 13 M4/16/256 Midnight,3620
+128,Air 13 M4/16/256 silver,3620
+129,Air 13 M5 16/512 Midnight,4450
+130,Air 13 M5 16/512 Silver,4490
+131,Air 13 M5 16/512 sky blue,4240
+132,Air 13 M5 16/512 starlight,4210
+133,Air 13 M5 16/1TB Midnight,4780
+134,Air 13 M5 16/1TB Silver,4830
+135,Air 13 M5 16/1TB sky blue,4580
+136,Air 13 M5 16/1TB starlight,4780
+137,Air 13 M5 24/1TB Midnight,5750
+138,Air 13 M5 24/1TB Silver,5750
+139,Air 13 M5 24/1TB sky blue,5750
+140,Air 13 M5 24/1TB starlight,5750
+141,Air 15 M5 2026 16/512 Midnight,4900
+142,Air 15 M5 2026 16/512 Starlight,4840
+143,Air 15 M5 2026 16/512 sky blue,4870
+144,Air 15 M5 2026 16/512 silver,5050
+145,Air 15 M5 2026 16/1TB Midnight,5840
+146,Air 15 M5 2026 16/1TB Sky Blue,5840
+147,Air 15 M5 2026 16/1TB Silver,5930
+148,Air 15 M5 2026 16/1TB Starlight,5840
+149,SE3 40 Midnight 2025,850
+150,SE3 40 Starlight 2025,890
+151,SE3 44 Midnight 2025,940
+152,SE3 44 Starlight 2025,980
+153,S11 42 Jet Black,1130
+154,S11 42 Space Gray,1130
+155,S11 42 Silver,1150
+156,S11 42 Rose Gold,1130
+157,S11 46 Jet Black,1210
+158,S11 46 Space Gray,1230
+159,S11 46 Silver,1230
+160,S11 46 Rose Gold,1210
+161,AirPods 4,450
+162,AirPods 4 ANC,580
+163,AirPods Pro 3,680
+164,AirPods Pro 2(USB),580
+165,AirPods Max Blue,1560
+166,AirPods Max Purple,1570
+167,AirPods Max Orange,1500
+168,AirPods Max Midnight,1560
+169,AirPods Max starlight,1570
+170,AirPods MAX 2 (2026) Midnight,1630
+171,AirPods MAX 2 (2026) Starlight,1660
+172,AirPods MAX 2 (2026) Blue,1630
+173,AirPods MAX 2 (2026) Purple,1630
+174,AirPods MAX 2 (2026) Orange,1630
+175,Pencil 3gen usbC,330
+176,Pencil Pro,420
+177,Adapter Apple 20W,80
+178,Magic Mouse (white),390
+179,Magic Mouse (grey),420
+180,AirTag 1 Шт,240
+181,AirTag 4 Шт,350
+182,AirTag 4Pac 2Gen,450
